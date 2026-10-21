@@ -53,6 +53,7 @@ svg.map{width:100%;border-radius:20px;background:var(--card)}
 <div class="phone" id="app"></div>
 <script src="config.js"></script>
 <script>
+const M={hello:'img/hello.png',listen:'img/listen.png',map:'img/map.png',fist:'img/fist.png'};
 const $=s=>document.querySelector(s);
 const CFG=window.COPI_CONFIG||{API:''};
 const DEMO=!CFG.API||/[?&]demo=1/.test(location.search);
