@@ -65,6 +65,8 @@ function err(e){s.err=ERR[e]||e;s.keep=1;const el=$('#er');if(el)el.textContent=
 async function api(b){if(DEMO)return{ok:true,demo:true};
  try{const r=await fetch(CFG.API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(b)});return await r.json()}
  catch(e){if(['addEntry','event','connection'].includes(b.action)){const q=LS.get('q')||[];q.push(b);LS.set('q',q)}return{ok:false,error:'offline'}}}
+function saveRF(){s.rf=s.rf||{};['rc','rn','re','rt','rg','rk'].forEach(k=>{const e=$('#'+k);if(e)s.rf[k]=e.type=='checkbox'?e.checked:e.value})}
+function restoreRF(){if(s.scr!='register'||!s.rf)return;for(const k in s.rf){const e=$('#'+k);if(e){if(e.type=='checkbox')e.checked=s.rf[k];else e.value=s.rf[k]}}}
 async function flush(){const q=LS.get('q')||[];if(!q.length||DEMO)return;LS.set('q',[]);for(const b of q)await api(b)}
 const ev=(e,d)=>SES.uid?api({action:'event',userId:SES.uid,codigo:SES.code,evento:e,detalle:d||''}):0;
 async function load(){const r=await api({action:'getEntries',userId:SES.uid,codigo:SES.code});if(r.ok&&r.entries)s.ent=r.entries.map(e=>({t:e.tipo,c:e.categoria,a:+e.monto,d:String(e.fecha).slice(0,10)}))}
@@ -76,7 +78,7 @@ function lp(t){const x=t.toLowerCase(),m=x.match(/(\d+(?:[.,]\d+)?)\s*(mil|k|luc
  const c=inc?(/propina/.test(x)?'Propina':/aparte|efectivo/.test(x)?'Cobro aparte':'Cobro de app'):/nafta|combustible|gnc|gasoil|carg[uú]e/.test(x)?'Combustible':/comida|com[ií]|almuerzo|caf[eé]|cena/.test(x)?'Mi comida':/limpi|lav/.test(x)?'Limpieza':/arreglo|taller|mec[aá]nic|service|cubierta|rueda|aceite|repar/.test(x)?'Arreglos del vehículo':'Otro gasto';
  return{t:inc?'inc':'exp',c,a}}
 const fmt=n=>(n<0?'-':'')+'$'+Math.abs(Math.round(n)).toLocaleString('es-AR');
-const mas=(k,w)=>`<img class="mas" src="${M[k]}" width="${w}" alt="CoPi">`;
+const mas=(k,w)=>`<img class="mas" src="${M[k]}" width="${w}" alt="CoPi" onerror="this.replaceWith(document.createTextNode('🛵'))">`;
 const ALL=['DiDi','Rappi','Uber','PedidosYa','Cabify','Particular','Otra'];
 const INC=[['💵','Cobro de app'],['🙌','Propina'],['🧾','Cobro aparte']];
 const EXP=[['⛽','Combustible'],['🔧','Arreglos del vehículo'],['🧼','Limpieza'],['🍔','Mi comida']];
@@ -153,7 +155,8 @@ function render(){
  let body=s.scr=='app'?V[s.tab]():V[s.scr]();
  $('#app').innerHTML=body+(nav?`<div class="nav">${NAV.map(([k,l,i])=>k=='plus'?`<button class="plus" data-a="plus">+</button>`:`<button class="${s.tab==k?'on':''}" data-a="tab:${k}">${i}${l}</button>`).join('')}</div>`:'')
  +(s.plus?`<div class="ov" data-a="plusx"><div class="fab"><button data-a="m:mic"><span>🎙️</span>Micrófono</button><button data-a="m:doc"><span>✍️</span>Carga manual</button></div></div>`:'')+pl()+(s.toast?`<div class="toast">${s.toast}</div>`:'');if(s.toast){const t=s.toast;setTimeout(()=>{if(s.toast==t){s.toast='';render()}},4000)}
- $('#dg').className=s.prem?'':'on';$('#dp').className=s.prem?'on':'';
+ if(s.scr=='register'&&s.rf)for(const[k,v]of Object.entries(s.rf)){const e=$('#'+k);if(e){if(e.type=='checkbox')e.checked=v;else e.value=v}}
+ $('#dg').className=s.prem?'':'on';$('#dp').className=s.prem?'on':'';restoreRF();
 }
 function entry(t,c,a,d,ic){api({action:'addEntry',userId:SES.uid,codigo:SES.code,tipo:t,categoria:c,monto:+a,fecha:d||key(today),origen:s.org||'manual'});s.org='';s.ent.push({t,c,a:+a,d:d||key(today),ic:ic||[...INC,...EXP,...s.newCats.inc,...s.newCats.exp].find(x=>x[1]==c)?.[0]||'💬'})}
 function setPrem(v){s.prem=v;if(!v)s.conn=[]}
@@ -195,8 +198,9 @@ talk:()=>{s.mic={ph:1};render();const ex=[['Puse 15 mil de nafta','exp','Combust
 mconf:()=>{const m=s.mic;s.vt='';entry(m.t,m.c,m.a);s.mic=null;s.scr='app';s.tab='home'},
 medit:()=>{const m=s.mic;s.f={t:m.t,c:m.c,a:m.a,n:''};s.scr='doc'}
 };
+function saveReg(){if(s.scr!='register')return;s.rf={};['rc','rn','re','rt','rg'].forEach(i=>{const e=$('#'+i);if(e)s.rf[i]=e.value});const k=$('#rk');if(k)s.rf.rk=k.checked}
 function keep(){const g=i=>$(i);if(g('#fa'))s.f.a=g('#fa').value;if(g('#fn'))s.f.n=g('#fn').value}
-document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;if(t.dataset.a=='plusx'&&e.target.closest('.fab'))return;const[k,...r]=t.dataset.a.split(':');if(A[k]){const x=A[k](r.join(':'));if(x&&x.then)x.then(()=>{if(s.keep)s.keep=0;else render()});else render()}});
+document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;if(s.scr=='register')saveRF();saveReg();if(t.dataset.a=='plusx'&&e.target.closest('.fab'))return;const[k,...r]=t.dataset.a.split(':');if(A[k]){const x=A[k](r.join(':'));if(x&&x.then)x.then(()=>{if(s.keep)s.keep=0;else render()});else render()}});
 document.addEventListener('change',async e=>{if(e.target.id!='fl'||!e.target.files[0])return;const f=e.target.files[0];e.target.value='';keep();
  if(DEMO){s.f={t:'exp',c:'Combustible',a:18500,n:'Leído de tu comprobante (simulado). Revisá y confirmá.'};render();return}
  s.toast='Leyendo tu comprobante…';render();
