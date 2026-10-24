@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CoPi Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet"><link rel="icon" href="favicon.ico" sizes="48x48"><link rel="icon" type="image/png" sizes="96x96" href="icon-96.png">
+<style>
+:root{--bg:#f2f5f3;--c:#fff;--tx:#233351;--mu:#6b7c86;--g:#12b271;--g2:#0d8f5c;--gl:#dcfce7;--ln:#e3ebe6;--pet:#233351;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1626;--c:#1b2a45;--tx:#e8f1ec;--mu:#92a4ad;--gl:#0f3a2b;--ln:#2a3b5c;--pet:#1b2a45;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1626;--c:#1b2a45;--tx:#e8f1ec;--mu:#92a4ad;--gl:#0f3a2b;--ln:#2a3b5c;--pet:#1b2a45;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font-family:'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:14px}
+header{background:var(--pet);color:#fff;padding:12px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:sticky;top:0;z-index:5}
+header b{font-size:20px}header b i{color:var(--g);font-style:normal}.tabs{display:flex;gap:4px;flex:1;overflow-x:auto}
+.tabs button{background:none;border:0;color:#b8cdc4;font:inherit;font-weight:700;padding:8px 14px;border-radius:10px;cursor:pointer;white-space:nowrap}.tabs button.on{background:var(--g);color:#fff}
+main{max-width:1100px;margin:0 auto;padding:16px}
+.note{background:var(--gl);color:var(--g2);border-radius:12px;padding:9px 13px;font-weight:700;font-size:13px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
+.card{background:var(--c);border:1px solid var(--ln);border-radius:16px;padding:14px;margin-bottom:14px}.grid .card{margin:0}
+.k{color:var(--mu);font-size:12px;font-weight:700}.v{font-size:28px;font-weight:900;margin-top:4px}.d{font-size:12px;color:var(--g2);font-weight:700}
+h3{margin:0 0 10px;font-size:15px}.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-bottom:14px}.two .card{margin:0}
+.bars{display:flex;align-items:flex-end;gap:6px;height:140px}.bars div{flex:1;text-align:center;font-size:10px;color:var(--mu);height:100%;display:flex;flex-direction:column;justify-content:flex-end}.bars b{display:block;background:linear-gradient(var(--g),var(--g2));border-radius:5px 5px 2px 2px;margin-bottom:4px}
+.fn{margin:7px 0}.fn .t{display:flex;justify-content:space-between;font-weight:700;margin-bottom:3px}.fn .b{height:12px;background:var(--ln);border-radius:8px;overflow:hidden}.fn i{display:block;height:100%;background:var(--g);border-radius:8px}
+input{border:1.5px solid var(--ln);background:var(--c);color:var(--tx);border-radius:10px;padding:9px 12px;font:inherit;width:100%;margin-bottom:12px}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:640px}th{text-align:left;color:var(--mu);font-size:12px;padding:8px;border-bottom:1px solid var(--ln)}td{padding:10px 8px;border-bottom:1px solid var(--ln)}tr.u{cursor:pointer}tr.u:hover{background:var(--gl)}
+.btn{border:0;background:var(--g);color:#fff;border-radius:10px;padding:9px 14px;font:inherit;font-weight:800;cursor:pointer}.btn.s{background:var(--ln);color:var(--tx)}
+.ev{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--ln)}.ev span:first-child{font-size:18px}.ev div{flex:1}.ev small{color:var(--mu)}
+.side{position:fixed;right:0;top:0;bottom:0;width:min(380px,100%);background:var(--c);border-left:1px solid var(--ln);box-shadow:-10px 0 30px rgba(0,0,0,.2);padding:20px;overflow-y:auto;z-index:9}
+.side p{display:flex;justify-content:space-between;gap:10px;margin:9px 0;border-bottom:1px solid var(--ln);padding-bottom:7px}.side p span:first-child{color:var(--mu)}
+.bar2{display:flex;align-items:center;gap:8px;margin:6px 0}.bar2 span{width:110px;color:var(--mu);font-weight:700;font-size:12px}.bar2 div{flex:1;background:var(--ln);border-radius:6px;height:10px}.bar2 i{display:block;height:100%;background:var(--g);border-radius:6px}.bar2 em{width:34px;font-style:normal;font-weight:800;text-align:right}
+h3,.v,.btn,.tabs button,header b{font-family:'Poppins','Montserrat',system-ui,sans-serif}</style></head><body>
+<header><b style="display:flex;align-items:center;gap:8px"><img src="logo-oscuro.png" alt="CoPi" height="26"><i style="font-size:13px;font-weight:600;color:#b8cdc4">Admin</i></b><div class="tabs" id="tabs"></div></header>
+<main><div class="note" id="note">Datos de ejemplo generados para la demo. Los datos individuales son solo para soporte y requieren consentimiento del usuario.</div><div id="v"></div></main><div id="sd"></div>
+<script src="admin-config.js"></script>
+<script>
+const $=s=>document.querySelector(s),fmt=n=>'$'+Math.round(n).toLocaleString('es-AR');
+const esc=t=>String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const rnd=i=>{let x=Math.sin(i*78.233)*43758.5453;return x-Math.floor(x)};
+const NM=['Facu','Lucía','Matías','Sofi','Nico','Cami','Tomás','Vale','Gonza','Juli'],AP=['Rappi','PedidosYa','Uber','DiDi','Cabify'],ZN=['CABA','GBA zona norte','GBA zona oeste','GBA zona sur','Otra provincia'];
+function mk(i){const r=k=>rnd(i*7+k),a=AP.filter((_,j)=>r(j)>.5);if(!a.length)a.push('Rappi');const meta=r(11)<.7?Math.round((90000+r(12)*120000)/1000)*1000:0;
+ return{id:'u'+(1000+i),n:NM[i%NM.length]+' '+String.fromCharCode(65+i%26)+'.',w:r(2)<.7?'Repartidor':r(2)<.9?'Conductor':'Ambos',z:ZN[Math.floor(r(4)*5)],v:['Moto','Bicicleta','Auto'][Math.floor(r(3)*3)],apps:a,j:Math.floor(r(6)*60),la:Math.floor(r(7)*9),en:Math.floor(r(8)*60),m:['Carga manual','Voz','OCR'][Math.floor(r(10)*3)],meta,est:meta?Math.round(meta/1.1/1000)*1000:0,cuenta:r(13)<.5?'si':r(13)<.8?'no':'',tyc:'v0-borrador',agr:r(14)<.6?'si':'no'}}
+let U=Array.from({length:40},(_,i)=>mk(i)),EV=[['🆕','Se registró Facu R.','Repartidor · Rappi','hace 2 min'],['🎯','Lucía M. configuró su meta','meta=150000','hace 9 min'],['🤖','Sofi P. usó lectura de comprobantes','ok','hace 21 min'],['💸','Cami L. cargó un gasto','Combustible · $15000 · voz','hace 1 h']],TK=[{n:'Matías G.',tel:'1155550000',msg:'No me deja cargar una foto.',t:'hace 3 h',estado:'nuevo'}];
+let tab='Resumen',q='';const T=['Resumen','Usuarios','Actividad','Embudo','Ayuda'];
+const kp=(k,v,d)=>`<div class="card"><div class="k">${k}</div><div class="v">${v}</div><div class="d">${d||''}</div></div>`;
+const pc=(a,b)=>b?Math.round(a/b*100)+'%':'—';
+const dist=(arr,f)=>{const m={};arr.forEach(u=>[].concat(f(u)).forEach(x=>{if(x&&x!='—')m[x]=(m[x]||0)+1}));const k=Object.entries(m).sort((a,b)=>b[1]-a[1]);if(!k.length)return'<p class="k">Sin datos todavía</p>';const mx=k[0][1];return k.map(([a,v])=>`<div class="bar2"><span>${esc(a)}</span><div><i style="width:${v/mx*100}%"></i></div><em>${v}</em></div>`).join('')};
+const avg=a=>a.length?fmt(a.reduce((x,y)=>x+y,0)/a.length):'—';
+const V={
+Resumen(){const n=U.length,act=U.filter(u=>u.la<=7).length,mt=U.filter(u=>u.meta>0).length,w=Array.from({length:12},(_,i)=>U.filter(u=>Math.floor(u.j/7)==11-i).length),mx=Math.max(1,...w);
+ return `<div class="grid">${kp('Usuarios registrados',n,'+'+U.filter(u=>u.j<=7).length+' esta semana')}${kp('Activos (7 días)',act,pc(act,n)+' del total')}${kp('Movimientos cargados',U.reduce((a,u)=>a+u.en,0))}${kp('Con meta definida',mt,pc(mt,n))}${kp('Consultas de ayuda',TK.length)}</div>
+<div class="two"><div class="card"><h3>Registros por semana</h3><div class="bars">${w.map((v,i)=>`<div><b style="height:${v/mx*80}%"></b>S${i+1}</div>`).join('')}</div></div><div class="card"><h3>Eventos recientes</h3>${EV.slice(0,5).map(e=>`<div class="ev"><span>${e[0]}</span><div><b>${esc(e[1])}</b><br><small>${esc(e[2])} · ${e[3]}</small></div></div>`).join('')||'<p class="k">Sin eventos</p>'}</div></div>
+<div class="two"><div class="card"><h3>Zona</h3>${dist(U,u=>u.z)}<h3 style="margin-top:14px">Trabajo</h3>${dist(U,u=>u.w)}<h3 style="margin-top:14px">Vehículo</h3>${dist(U,u=>u.v)}</div><div class="card"><h3>Apps más usadas</h3>${dist(U,u=>u.apps)}<h3 style="margin-top:14px">Cómo cargan sus datos</h3>${dist(U,u=>u.m)}</div></div>`},
+Usuarios(){const r=U.filter(u=>u.n.toLowerCase().includes(q.toLowerCase()));
+ return `<div class="card"><input id="q" placeholder="Buscar por nombre" value="${esc(q)}"><div class="tw"><table><tr><th>Usuario</th><th>Trabajo</th><th>Apps</th><th>Zona</th><th>Meta</th><th>Última act.</th></tr>${r.slice(0,50).map(u=>`<tr class="u" data-id="${esc(u.id)}"><td><b>${esc(u.n)}</b></td><td>${esc(u.w)}</td><td>${esc(u.apps.join(', '))}</td><td>${esc(u.z)}</td><td>${u.meta?fmt(u.meta):'—'}</td><td>${u.la?'hace '+u.la+' d':'hoy'}</td></tr>`).join('')}</table></div><p class="k">${r.length} usuarios</p></div>`},
+Actividad(){return `<div class="card"><h3>Feed de actividad</h3>${EV.map(e=>`<div class="ev"><span>${e[0]}</span><div><b>${esc(e[1])}</b><br><small>${esc(e[2])} · ${e[3]}</small></div></div>`).join('')||'<p class="k">Sin actividad todavía</p>'}</div>`},
+Embudo(){const n=U.length,st=[['Registro',n],['Definió una meta',U.filter(u=>u.meta>0).length],['Cargó al menos un movimiento',U.filter(u=>u.en>0).length],['Activo en los últimos 7 días',U.filter(u=>u.en>0&&u.la<=7).length]],cu=U.map(u=>u.cuenta=='si'?'Sí':u.cuenta=='no'?'No':'Sin respuesta');
+ return `<div class="card"><h3>Embudo de uso</h3>${st.map(([k,v])=>`<div class="fn"><div class="t"><span>${k}</span><span>${v} · ${pc(v,n)}</span></div><div class="b"><i style="width:${n?v/n*100:0}%"></i></div></div>`).join('')}</div>
+ <div class="two"><div class="card"><h3>¿Llevan la cuenta semanal?</h3>${dist(U,u=>u.cuenta=='si'?'Sí':u.cuenta=='no'?'No':'Sin respuesta')}</div><div class="card"><h3>Metas y estimaciones</h3><p>Meta promedio: <b>${avg(U.filter(u=>u.meta>0).map(u=>u.meta))}</b></p><p>Ganancia semanal estimada promedio: <b>${avg(U.filter(u=>u.est>0).map(u=>u.est))}</b></p><p class="k">Datos autodeclarados.</p></div></div>`},
+Ayuda(){return `<div class="card"><h3>Consultas de usuarios</h3>${TK.map(t=>`<div class="ev"><span>💬</span><div><b>${esc(t.n)}</b> <small>${esc(t.tel)} · ${t.t} · ${esc(t.estado)}</small><br>${esc(t.msg)}</div></div>`).join('')||'<p class="k">No hay consultas.</p>'}<p class="k" style="margin-top:12px">Para avisos, escribilos en la pestaña "avisos" de la planilla.</p></div>`}};
+function side(u){$('#sd').innerHTML=u?`<div class="side"><button class="btn s" id="cl" style="float:right">✕</button><h3 style="font-size:20px">${esc(u.n)}</h3><p style="margin-top:14px"><span>ID</span><b>${esc(u.id)}</b></p><p><span>Trabajo</span><b>${esc(u.w)}</b></p><p><span>Zona</span><b>${esc(u.z)}</b></p><p><span>Vehículo</span><b>${esc(u.v)}</b></p><p><span>Apps elegidas</span><b>${esc(u.apps.join(', '))}</b></p><p><span>Alta</span><b>hace ${u.j} días</b></p><p><span>Movimientos cargados</span><b>${u.en}</b></p><p><span>Método preferido</span><b>${esc(u.m)}</b></p><p><span>Lleva cuenta semanal</span><b>${u.cuenta=='si'?'Sí':u.cuenta=='no'?'No':'Sin respuesta'}</b></p><p><span>Ganancia estimada</span><b>${u.est?fmt(u.est):'—'}</b></p><p><span>Meta semanal</span><b>${u.meta?fmt(u.meta):'—'}</b></p><p><span>Términos aceptados</span><b>${esc(u.tyc||'—')}</b></p><p><span>Datos agregados</span><b>${u.agr=='si'?'Aceptó':'No aceptó'}</b></p><p class="k" style="border:0">Los ingresos individuales no se muestran en esta vista.</p></div>`:''}
+function render(){$('#tabs').innerHTML=T.map(t=>`<button class="${t==tab?'on':''}" data-t="${t}">${t}</button>`).join('');$('#v').innerHTML=V[tab]();
+ const qi=$('#q');if(qi)qi.oninput=e=>{q=e.target.value;const p=e.target.selectionStart;render();const n=$('#q');n.focus();n.setSelectionRange(p,p)}}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-t]');if(t){tab=t.dataset.t;side(null);render();return}const r=e.target.closest('tr.u');if(r){side(U.find(u=>u.id==r.dataset.id));return}if(e.target.id=='cl')side(null)});
+render();
+const CF=window.ADMIN_CONFIG||{};
+if(CF.API){$('#note').textContent='Datos reales del piloto (Google Sheets).';U=[];EV=[];TK=[];render();
+ const k=sessionStorage.getItem('ak')||prompt('Clave de administrador');
+ if(k)fetch(CF.API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'admin',adminKey:k,op:'dashboard'})}).then(r=>r.json()).then(r=>{if(!r.ok){sessionStorage.removeItem('ak');alert('Clave incorrecta');return}sessionStorage.setItem('ak',k);U=r.users;EV=r.events;TK=r.tickets||[];render()}).catch(()=>alert('No se pudo conectar'));}
+</script></body></html>
