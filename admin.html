@@ -62,8 +62,9 @@ function render(){$('#tabs').innerHTML=T.map(t=>`<button class="${t==tab?'on':''
  const qi=$('#q');if(qi)qi.oninput=e=>{q=e.target.value;const p=e.target.selectionStart;render();const n=$('#q');n.focus();n.setSelectionRange(p,p)}}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-t]');if(t){tab=t.dataset.t;side(null);render();return}const r=e.target.closest('tr.u');if(r){side(U.find(u=>u.id==r.dataset.id));return}if(e.target.id=='cl')side(null)});
 render();
+const EXCL=['ADM1','PROF','ADM3','PRUEBA'],ex=t=>EXCL.some(x=>new RegExp('(^|[^A-Za-z0-9])'+x+'([^A-Za-z0-9]|$)','i').test(String(t==null?'':t)));
 const CF=window.ADMIN_CONFIG||{};
 if(CF.API){$('#note').textContent='Datos reales del piloto (Google Sheets).';U=[];EV=[];TK=[];render();
  const k=sessionStorage.getItem('ak')||prompt('Clave de administrador');
- if(k)fetch(CF.API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'admin',adminKey:k,op:'dashboard'})}).then(r=>r.json()).then(r=>{if(!r.ok){sessionStorage.removeItem('ak');alert('Clave incorrecta');return}sessionStorage.setItem('ak',k);U=r.users;EV=r.events;TK=r.tickets||[];render()}).catch(()=>alert('No se pudo conectar'));}
+ if(k)fetch(CF.API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'admin',adminKey:k,op:'dashboard'})}).then(r=>r.json()).then(r=>{if(!r.ok){sessionStorage.removeItem('ak');alert('Clave incorrecta');return}sessionStorage.setItem('ak',k);U=(r.users||[]).filter(u=>!ex(u.id)&&!ex(u.n));EV=(r.events||[]).filter(e=>!ex(e[1])&&!ex(e[2]));TK=(r.tickets||[]).filter(t=>!ex(t.n));render()}).catch(()=>alert('No se pudo conectar'));}
 </script></body></html>
