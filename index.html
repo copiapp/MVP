@@ -33,12 +33,12 @@ input:focus{outline:2px solid var(--g)}
 .bar{height:11px;border-radius:9px;background:var(--ln);overflow:hidden;margin:8px 0 4px}.bar i{display:block;height:100%;background:var(--g);border-radius:9px}
 .mu{color:var(--mu);font-size:12px}.tag{display:inline-block;background:var(--gl);color:var(--g2);font-weight:800;font-size:12px;border-radius:99px;padding:4px 10px}
 .bars{display:flex;align-items:flex-end;gap:6px;height:130px;padding-top:6px}.bars div{flex:1;text-align:center;font-size:10px;color:var(--mu);display:flex;flex-direction:column;justify-content:flex-end;height:100%}.bars b{display:block;background:linear-gradient(var(--g),var(--g2));border-radius:6px 6px 3px 3px;margin-bottom:4px}.bars em{font-style:normal;font-weight:800;color:var(--tx);font-size:9.5px;margin-bottom:2px}
-.nav{display:flex;align-items:center;justify-content:space-around;border-top:1px solid var(--ln);background:var(--ph);padding:8px 4px 10px}
+
 .nav button{background:none;border:0;color:var(--mu);font:inherit;font-size:11px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;flex:1}.nav button.on{color:var(--g2)}
 .nav svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.nav{position:relative;z-index:5}.nav .plus{flex:0 0 58px;width:58px;height:58px;border-radius:50%;background:var(--g);color:#fff;position:relative;top:-22px;box-shadow:0 6px 16px rgba(18,178,113,.45);display:flex;align-items:center;justify-content:center;padding:0;border:4px solid var(--ph);box-sizing:content-box;gap:0}
-.ov{position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;flex-direction:column;justify-content:flex-end;align-items:center;z-index:9;padding-bottom:84px}
-.fab{display:flex;gap:14px}.fab button{background:var(--card2);color:var(--tx);border:0;border-radius:20px;padding:14px 18px;font:inherit;font-weight:800;font-size:14px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25)}.fab span{font-size:30px}
+
+
+
 .sheet{position:absolute;inset:0;background:var(--ph);z-index:10;display:flex;flex-direction:column;padding:18px 16px;overflow-y:auto}
 .li{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--ln)}.li .ic{width:38px;height:38px;border-radius:12px;background:var(--gl);display:grid;place-items:center;font-size:19px}.li div:nth-child(2){flex:1;font-weight:800;font-size:14px}.pos{color:var(--g2);font-weight:900}.neg{color:#ef4444;font-weight:900}
 .seg{display:flex;background:var(--in);border-radius:14px;padding:4px;margin-bottom:12px}.seg button{flex:1;border:0;background:none;color:var(--mu);font:inherit;font-weight:800;padding:9px;border-radius:11px;cursor:pointer}.seg button.on{background:var(--g);color:#fff}
@@ -47,7 +47,33 @@ input:focus{outline:2px solid var(--g)}
 @keyframes w{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}.wv{display:flex;gap:5px;align-items:center;justify-content:center;height:50px}.wv i{width:6px;height:46px;border-radius:4px;background:var(--g);animation:w 1s infinite}
 .back{background:none;border:0;color:var(--tx);font:inherit;font-weight:800;font-size:15px;cursor:pointer;padding:0 0 8px}
 svg.map{width:100%;border-radius:20px;background:var(--card)}
-.cg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.cat{border:1.5px solid var(--ln);background:var(--in);color:var(--tx);border-radius:14px;padding:10px 4px;font:inherit;font-weight:700;font-size:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;min-height:70px;text-align:center;line-height:1.15;word-break:break-word}.cat span{font-size:22px}.cat.on{background:var(--g);border-color:var(--g);color:#fff}.toast{position:absolute;left:16px;right:16px;bottom:90px;background:var(--pet);color:#fff;border-radius:14px;padding:12px 14px;z-index:20;font-weight:700}h1,h2,.big,.btn,.tag,.chip,.nav button,.back{font-family:'Poppins','Montserrat',system-ui,sans-serif}.ov2{position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:11}.msheet{position:absolute;left:0;right:0;bottom:0;z-index:12;background:var(--ph);border-radius:22px 22px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -10px 30px rgba(0,0,0,.25)}.msheet input{margin-top:10px}.logo-d{display:none}@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo-l{display:none}:root:not([data-theme="light"]) .logo-d{display:inline}}:root[data-theme="dark"] .logo-l{display:none}:root[data-theme="dark"] .logo-d{display:inline}.demo.off{display:none!important}.ck{display:flex;gap:8px;align-items:flex-start;font-weight:600;font-size:13px;margin:12px 0}.ck input{width:22px;height:22px;flex:none;margin-top:2px}.ck a{color:var(--g2)}.bell{background:var(--in);border:0;border-radius:50%;width:42px;height:42px;font-size:20px;position:relative;cursor:pointer}.bell i{position:absolute;top:-2px;right:-2px;background:#ef4444;color:#fff;font:700 11px system-ui;border-radius:99px;padding:2px 6px}textarea{resize:none}</style></head>
+.cg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.cat{border:1.5px solid var(--ln);background:var(--in);color:var(--tx);border-radius:14px;padding:10px 4px;font:inherit;font-weight:700;font-size:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;min-height:70px;text-align:center;line-height:1.15;word-break:break-word}.cat span{font-size:22px}.cat.on{background:var(--g);border-color:var(--g);color:#fff}.toast{position:absolute;left:16px;right:16px;bottom:90px;background:var(--pet);color:#fff;border-radius:14px;padding:12px 14px;z-index:20;font-weight:700}h1,h2,.big,.btn,.tag,.chip,.nav button,.back{font-family:'Poppins','Montserrat',system-ui,sans-serif}.ov2{position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:11}.msheet{position:absolute;left:0;right:0;bottom:0;z-index:12;background:var(--ph);border-radius:22px 22px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -10px 30px rgba(0,0,0,.25)}.msheet input{margin-top:10px}.logo-d{display:none}@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo-l{display:none}:root:not([data-theme="light"]) .logo-d{display:inline}}:root[data-theme="dark"] .logo-l{display:none}:root[data-theme="dark"] .logo-d{display:inline}.demo.off{display:none!important}.ck{display:flex;gap:8px;align-items:flex-start;font-weight:600;font-size:13px;margin:12px 0}.ck input{width:22px;height:22px;flex:none;margin-top:2px}.ck a{color:var(--g2)}.bell{background:var(--in);border:0;border-radius:50%;width:42px;height:42px;font-size:20px;position:relative;cursor:pointer}.bell i{position:absolute;top:-2px;right:-2px;background:#ef4444;color:#fff;font:700 11px system-ui;border-radius:99px;padding:2px 6px}textarea{resize:none}
+.nav{display:flex;align-items:center;justify-content:space-around;border-top:1px solid var(--ln);background:var(--ph);padding:0 2px;height:62px;position:relative;z-index:5;flex:none}
+.nav button{min-width:0}.nav button.on .bulb{fill:rgba(245,158,11,.35)}
+.plus{position:absolute;left:14px;bottom:76px;width:54px;height:54px;border-radius:50%;background:var(--g);border:0;padding:0;display:grid;place-items:center;cursor:pointer;z-index:12;box-shadow:0 8px 20px rgba(18,178,113,.5);transition:transform .2s,background .2s}.plus svg{width:28px;height:28px;stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round}.plus.open{transform:rotate(45deg);background:var(--pet);box-shadow:0 8px 20px rgba(0,0,0,.35)}
+.hasnav .scr{padding-bottom:92px}
+.ov{position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;z-index:9;padding:0 0 142px 14px}
+.fab{display:flex;flex-direction:column;gap:10px;align-items:flex-start}.fab button{background:var(--card2);color:var(--tx);border:0;border-radius:99px;padding:12px 20px 12px 14px;font:inherit;font-weight:800;font-size:15px;display:flex;flex-direction:row;align-items:center;gap:10px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25)}.fab span{font-size:22px}
+.bulbic{width:46px;height:46px;border-radius:50%;background:#fef3c7;color:#b45309;display:grid;place-items:center;flex:none}.bulbic svg{width:26px;height:26px;stroke:currentColor;fill:rgba(245,158,11,.35);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .bulbic{background:rgba(245,158,11,.18);color:#fbbf24}}:root[data-theme="dark"] .bulbic{background:rgba(245,158,11,.18);color:#fbbf24}
+.bars b.dim{background:var(--ln)}
+.pj{width:100%;display:block;touch-action:pan-y;user-select:none;-webkit-user-select:none}.pj text{font:600 9px Montserrat,system-ui,sans-serif;fill:var(--mu)}
+.lg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:11px;color:var(--mu);margin-top:6px}.lg i{display:inline-block;width:16px;height:0;border-top:3px solid;vertical-align:middle;margin-right:5px}.lg i.bd{height:9px;border:0;border-radius:3px;background:rgba(18,178,113,.25)}
+.amb{background:#fffbeb;border:1px solid #fde68a;border-radius:20px;padding:14px;margin-bottom:12px}.amb p{color:#92400e}.amb b.pl{color:#b45309}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .amb{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.35)}:root:not([data-theme="light"]) .amb p{color:#fcd34d}:root:not([data-theme="light"]) .amb b.pl{color:#fbbf24}}:root[data-theme="dark"] .amb{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.35)}:root[data-theme="dark"] .amb p{color:#fcd34d}:root[data-theme="dark"] .amb b.pl{color:#fbbf24}
+.rr{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--ln)}.rr:last-of-type{border-bottom:0}.rr .ic{width:38px;height:38px;border-radius:12px;background:var(--gl);display:grid;place-items:center;font-size:19px;flex:none}.rr .mu{margin-top:3px}.rr b{font-family:'Poppins','Montserrat',sans-serif}
+.chips.sm .chip{padding:5px 11px;font-size:13px;cursor:default}
+.ins{margin:8px 0 0;padding:0;list-style:none}.ins li{font-size:13px;color:var(--mu);margin:7px 0;padding-left:20px;position:relative;line-height:1.4}.ins li:before{content:"•";position:absolute;left:6px;color:var(--g2);font-weight:900}
+.how{font-size:13px;color:var(--mu);line-height:1.45}.how li{margin:6px 0}.how ol{padding-left:18px;margin:8px 0 0}
+.mapbox{margin:10px 0 6px}.mapwrap{position:relative;height:400px;border-radius:20px;overflow:hidden;border:1px solid var(--ln);background:var(--card)}.mapel{position:absolute;inset:0;z-index:0}
+.mapbtn{position:absolute;left:10px;top:10px;z-index:1000;width:40px;height:40px;border-radius:50%;border:0;background:var(--card2);color:var(--tx);font-size:19px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.3);display:grid;place-items:center}
+.mapnote{position:absolute;left:10px;right:10px;bottom:10px;z-index:1000;background:var(--pet);color:#fff;border-radius:12px;padding:10px 12px;font-weight:700;font-size:13px;display:none}.mapnote.on{display:block}
+.leaflet-tooltip.zl{background:color-mix(in srgb,var(--ph) 88%,transparent);border:0;box-shadow:0 1px 4px rgba(0,0,0,.25);color:var(--tx);font:700 10px Poppins,Montserrat,sans-serif;padding:1px 6px;border-radius:99px;white-space:nowrap}.leaflet-tooltip.zl:before{display:none}.leaflet-tooltip.zl b{background:var(--g2);color:#fff;border-radius:99px;padding:0 5px;margin-right:3px}
+.mapel.lowz .leaflet-tooltip.zl:not(.top){display:none}
+.ramp{height:8px;border-radius:9px;background:linear-gradient(90deg,hsl(35,70%,45%),hsl(92,70%,45%),hsl(150,70%,45%));margin:8px 0 3px}
+.hscroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:6px;scrollbar-width:none}.hscroll::-webkit-scrollbar{display:none}.hscroll .chip{white-space:nowrap;flex:none}
+.zrow{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--ln);cursor:pointer}.zrow:last-child{border-bottom:0}.zrow .rk{width:26px;height:26px;border-radius:50%;background:var(--g);color:#fff;font:800 13px Poppins,sans-serif;display:grid;place-items:center;flex:none}.zrow div{flex:1;font-weight:800;font-size:14px}
+</style></head>
 <body>
 
 <div class="phone" id="app"></div>
@@ -147,7 +173,7 @@ function period(){
 function agg(it){const m={};it.forEach(x=>{const k=x.id||(x.t+x.c);m[k]=m[k]||{...x,a:0};m[k].a+=x.a});return Object.values(m)}
 const bars=(b,l)=>{const mx=Math.max(1,...b);return `<div class="bars">${b.map((v,i)=>`<div><em>${v>=1000?(v/1000).toFixed(1)+'k':v}</em><b style="height:${Math.max(0,v)/mx*78}%"></b>${l[i]}</div>`).join('')}</div>`};
 const ico=p=>`<svg viewBox="0 0 24 24">${p}</svg>`;
-const NAV=[['home','Inicio',ico('<path d="M3 11l9-8 9 8v10H3z"/>')],['act','Actividad',ico('<path d="M5 20V10M12 20V4M19 20v-7"/>')],['plus','',''],['map','Mapa',ico('<path d="M12 21s7-6 7-11a7 7 0 10-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>')],['me','Perfil',ico('<circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 15-5 16 0"/>')]];
+const NAV=[['home','Inicio',ico('<path d="M3 11l9-8 9 8v10H3z"/>')],['act','Actividad',ico('<path d="M5 20V10M12 20V4M19 20v-7"/>')],['cop','Copiloto','<svg viewBox="0 0 24 24" class="bulb"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>'],['map','Mapa',ico('<path d="M12 21s7-6 7-11a7 7 0 10-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>')],['me','Perfil',ico('<circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 15-5 16 0"/>')]];
 const wkMin=()=>{const a=new Date(mon).setHours(0,0,0,0),b=a+7*864e5;return s.shifts.filter(x=>x.ini>=a&&x.ini<b).reduce((t,x)=>t+x.min,0)+(s.since?Math.round((Date.now()-s.since)/6e4):0)};
 const hrs=()=>{const m=wkMin();return Math.floor(m/60)+' h '+m%60+' min'};
 
@@ -166,6 +192,151 @@ const fxCard=()=>fxPend().length&&LS.get('fxskip')!=ym()?`<div class="card w row
 const chp=(on,a,t)=>`<button class="chip ${on?'on':''}" data-a="${a}">${t}</button>`;
 const ld=t=>{const d=new Date(t);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const hm=t=>new Date(t).toTimeString().slice(0,5),dlab=t=>new Date(t).toLocaleDateString('es-AR',{weekday:'short',day:'numeric',month:'short'});
+/* ---------- Copiloto: proyección + recomendación ---------- */
+const WK=d=>(d.getDay()+6)%7;
+const DNS=['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+const DNL=['lunes','martes','miércoles','jueves','viernes','sábado','domingo'];
+const PARTS=[['Mañana','7 a 11'],['Almuerzo','11 a 15'],['Tarde','15 a 19'],['Cena','19 a 23'],['Noche','23 a 3']];
+const wkey=()=>s.work=='Conductor'?'con':s.work=='Ambos'?'amb':'rep';
+const drv=()=>s.work=='Conductor'?1:s.work=='Ambos'?.5:0;
+/* PRIOR DE COHORTE ("lo que hacen riders como vos").
+   OJO: son valores iniciales de referencia, NO datos medidos del piloto. Reemplazar con datos reales cuando haya volumen.
+   idx = rendimiento relativo por día (Lun→Dom); hrs = horas típicas por jornada; sig = variabilidad típica de un día. */
+const COH={idx:{rep:[.86,.88,.93,.98,1.14,1.2,1.07],con:[.95,.97,1,1.05,1.17,1.12,.78]},hrs:{rep:7,con:8,amb:7.5},sig:.28};
+function cohIdx(){const k=wkey(),a=k=='amb'?COH.idx.rep.map((v,i)=>(v+COH.idx.con[i])/2):COH.idx[k],m=a.reduce((x,y)=>x+y,0)/7;return a.map(v=>v/m)}
+/* Demanda relativa por tipo de zona × franja (Mañana, Almuerzo, Tarde, Cena, Noche). l = lunes a jueves, f = viernes noche a domingo. También prior inicial. */
+const ZT={ofi:{l:[1,1.3,.9,.6,.2],f:[.2,.3,.3,.4,.2]},res:{l:[.4,.8,.7,1.3,.5],f:[.4,1.1,.9,1.4,.7]},mix:{l:[.5,1,.8,1.3,.8],f:[.5,1.1,1,1.5,1.1]},sub:{l:[.3,.6,.6,1,.3],f:[.3,.8,.8,1.2,.4]}};
+const CM={l:[1.5,.8,.9,1.1,.7],f:[.6,.8,.9,1.1,1.6]}; // ajuste para conductores (picos de viaje: mañana laboral y noche de finde)
+const GR=['CABA','GBA zona norte','GBA zona oeste','GBA zona sur'];
+// id, nombre, lat, lng, grupo (GR), tipo, base de demanda, saturación (0-1: competencia entre riders), radio (m), apto bici
+const ZN=[['pal','Palermo',-34.5875,-58.4300,0,'mix',100,.8,1500,1],['rec','Recoleta',-34.5880,-58.3950,0,'res',90,.6,1200,1],['bel','Belgrano',-34.5620,-58.4560,0,'res',88,.6,1500,1],['nun','Núñez / Saavedra',-34.5450,-58.4640,0,'res',70,.4,1500,1],['mic','Microcentro',-34.6040,-58.3820,0,'ofi',85,.7,1200,1],['ret','Retiro / Puerto Madero',-34.5930,-58.3680,0,'ofi',62,.3,1200,1],['stl','San Telmo / Monserrat',-34.6230,-58.3750,0,'mix',70,.5,1200,1],['onc','Once / Balvanera',-34.6070,-58.4060,0,'ofi',74,.6,1100,1],['alm','Almagro / Boedo',-34.6140,-58.4190,0,'res',72,.5,1200,1],['cab','Caballito',-34.6190,-58.4440,0,'res',82,.6,1500,1],['vcr','Villa Crespo / Chacarita',-34.5950,-58.4450,0,'mix',78,.5,1300,1],['vur','Villa Urquiza / Devoto',-34.5760,-58.4950,0,'res',66,.3,1600,1],['flo','Flores',-34.6290,-58.4600,0,'res',60,.3,1400,1],['bar','Barracas / Parque Patricios',-34.6350,-58.3980,0,'res',50,.2,1400,1],
+['vlo','Vicente López / Olivos',-34.5100,-58.4900,1,'res',80,.4,2300,0],['sis','San Isidro / Martínez',-34.4750,-58.5050,1,'res',76,.4,2400,0],['smn','San Martín / Ballester',-34.5750,-58.5400,1,'res',62,.3,2300,0],['tig','Tigre / Nordelta',-34.4300,-58.5800,1,'sub',55,.2,2600,0],
+['mor','Morón / Haedo',-34.6520,-58.6200,2,'res',66,.3,2300,0],['rms','Ramos Mejía / San Justo',-34.6600,-58.5650,2,'res',64,.3,2400,0],['caz','Caseros / Tres de Febrero',-34.6050,-58.5620,2,'res',58,.3,2000,0],['cas','Castelar / Ituzaingó',-34.6580,-58.6650,2,'sub',52,.2,2600,0],['mer','Merlo / Moreno',-34.6650,-58.7270,2,'sub',45,.1,2800,0],
+['ave','Avellaneda / Sarandí',-34.6620,-58.3650,3,'res',68,.4,2000,0],['lan','Lanús',-34.7060,-58.3920,3,'res',64,.3,2200,0],['lom','Lomas de Zamora / Banfield',-34.7500,-58.4000,3,'res',62,.3,2600,0],['qui','Quilmes / Bernal',-34.7200,-58.2700,3,'res',58,.2,2400,0],['tem','Temperley / Adrogué',-34.7900,-58.3900,3,'sub',48,.1,2600,0]].map(a=>({id:a[0],n:a[1],la:a[2],ln:a[3],g:a[4],t:a[5],b:a[6],sat:a[7],r:a[8],bi:a[9]}));
+function dem(z,d,pi){const f=(d>=5||(d==4&&pi>=3))?'f':'l',w=drv();return z.b*ZT[z.t][f][pi]*(1-w+w*CM[f][pi])*(1-.4*z.sat)}
+const nowPart=()=>{const h=new Date().getHours();return h>=7&&h<11?0:h>=11&&h<15?1:h>=15&&h<19?2:h>=19&&h<23?3:4};
+function zoneRanks(dw,pi,L){L=L||ZN;const v=L.map(z=>({z,v:dem(z,dw,pi)})).sort((a,b)=>b.v-a.v),mx=v[0]?v[0].v:1;return v.map((o,i)=>({...o,idx:Math.round(o.v/mx*100),rank:i+1}))}
+const dp=d=>DNL[d]+(d>=5?'s':'');
+const lvl=i=>i>=80?'Muy alta':i>=60?'Alta':i>=40?'Media':'Baja';
+function zoneSet(){const z=s.zona||'';if(/^Otra provincia/.test(z))return null;let L=ZN;const gi=GR.indexOf(z);if(gi>=0)L=L.filter(x=>x.g==gi);if(s.veh=='Bicicleta'){const b=L.filter(x=>x.bi);if(b.length)L=b}return L}
+/* Apps: PRIOR inicial por franja (valores de referencia, NO medidos). Se ajusta con tus datos cuando marcás de qué app es cada ingreso. */
+const APPP={Rappi:[.9,1,.9,1.05,1],PedidosYa:[.85,1.1,.9,1.1,.8],Uber:[1.1,.9,1,1,1.1],DiDi:[1.05,.9,1,1,1.05],Cabify:[1.15,.85,1,.95,.9]},APPT={Rappi:'rep',PedidosYa:'rep',Uber:'con',DiDi:'con',Cabify:'con'};
+const nrm=t=>String(t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+function appRec(pi1,pi2){const L=(s.apps||[]).filter(a=>APPP[a]&&(s.work=='Ambos'||APPT[a]==wkey()));if(!L.length)return{none:1,has:(s.apps||[]).length};
+ const ob={};L.forEach(a=>ob[a]={d:new Set(),t:0});
+ s.ent.filter(e=>e.t=='inc'&&e.n).forEach(e=>L.forEach(a=>{if(nrm(e.n).includes(nrm(a))){ob[a].d.add(e.d);ob[a].t+=e.a}}));
+ const have=L.filter(a=>ob[a].d.size>=2),mean=have.length?have.reduce((t,a)=>t+ob[a].t/ob[a].d.size,0)/have.length:0;
+ const adj=a=>{if(have.length<2||!have.includes(a))return 1;const n=ob[a].d.size,r=(ob[a].t/n)/mean;return Math.max(.6,Math.min(1.6,1+(r-1)*n/(n+3)))};
+ const pick=pi=>{const v=L.map(a=>({a,v:APPP[a][pi]*adj(a)})).sort((x,y)=>y.v-x.v);return{pi,a:v[0].a,alt:v[1]?v[1].a:null}};
+ return{L,own:have.length>=2,r:[pick(pi1),...(pi2!=null?[pick(pi2)]:[])]}}
+const fmtK=v=>{const a=Math.abs(v),g=v<0?'-':'';return a>=1e6?g+'$'+(a/1e6).toFixed(a>=1e7?0:1).replace('.',',')+' M':a>=1e3?g+'$'+Math.round(a/1e3)+'k':g+'$'+Math.round(a)};
+const niceStep=r=>{const p=Math.pow(10,Math.floor(Math.log10(r||1))),f=r/p;return(f<=1?1:f<=2?2:f<=5?5:10)*p};
+function rng(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const gs=R=>{let u=0;while(!u)u=R();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*R())};
+/* Historia diaria del usuario (hasta ayer). Los gastos fijos mensuales quedan afuera y se proyectan aparte, para que no distorsionen los días. */
+function histObs(){const y=addD(today,-1);let st;
+ if(DEMO)st=addD(today,-28);
+ else{const ds=[...s.ent.filter(e=>e.t=='inc').map(e=>String(e.d).slice(0,10)),...s.shifts.map(x=>String(x.d).slice(0,10))].filter(Boolean).sort();if(!ds.length)return[];st=new Date(ds[0]+'T12:00');const lim=addD(today,-56);if(st<lim)st=lim}
+ const out=[];for(let d=new Date(st);d<=y;d=addD(d,1)){const it=day(d),inc=it.filter(x=>x.t=='inc').reduce((a,x)=>a+x.a,0),ex=it.filter(x=>x.t=='exp'&&!FIXC.includes(x.c)).reduce((a,x)=>a+x.a,0),age=Math.round((today-d)/864e5);
+  out.push({d:new Date(d),dow:WK(d),age,w:Math.pow(.5,age/21),worked:inc>0,net:inc-ex,exp:ex})}
+ return out}
+/* Modelo: (1) pesa más lo reciente, (2) aprende cuánto rinde cada día de la semana y con qué probabilidad lo trabajás,
+   (3) con pocos datos mezcla con el patrón de riders parecidos (shrinkage), (4) tendencia amortiguada solo con 4+ semanas. */
+function copModel(){const obs=histObs(),Wk=obs.filter(o=>o.worked);
+ if(obs.length<7||Wk.length<3)return{ok:false,days:obs.length,worked:Wk.length};
+ const sw=a=>a.reduce((t,o)=>t+o.w,0),swn=a=>a.reduce((t,o)=>t+o.w*o.net,0);
+ const mu0=swn(Wk)/sw(Wk),rbar=sw(Wk)/sw(obs),ci=cohIdx(),K=2,KP=1.5,mu=[],pw=[],nd=[];
+ for(let d=0;d<7;d++){const ow=obs.filter(o=>o.dow==d),wd=ow.filter(o=>o.worked),nW=sw(wd),nA=sw(ow);
+  mu[d]=(swn(wd)+K*mu0*ci[d])/(nW+K);pw[d]=Math.min(.98,Math.max(.03,(nW+KP*rbar)/(nA+KP)));nd[d]=wd.length}
+ let rs=Wk.map(o=>o.net-mu[o.dow]).sort((a,b)=>a-b);
+ if(rs.length>=5){const lo=rs[Math.floor(rs.length*.1)],hi=rs[Math.ceil(rs.length*.9)-1];rs=rs.map(x=>Math.min(hi,Math.max(lo,x)))}
+ const mr=rs.reduce((a,b)=>a+b,0)/rs.length;rs=rs.map(x=>x-mr);
+ const bl={};obs.forEach(o=>{const b=Math.floor((o.age-1)/7);(bl[b]=bl[b]||[]).push(o)});
+ const ys=Object.keys(bl).map(Number).sort((a,b)=>a-b).filter(b=>bl[b].length==7).map(b=>bl[b].reduce((t,o)=>t+o.net,0));
+ let g=0;if(ys.length>=4){const n=ys.length,xs=ys.map((_,i)=>n-1-i),mx=(n-1)/2,my=ys.reduce((a,b)=>a+b,0)/n,sl=xs.reduce((t,x,i)=>t+(x-mx)*(ys[i]-my),0)/xs.reduce((t,x)=>t+(x-mx)*(x-mx),0);if(my>0)g=Math.max(-.03,Math.min(.03,sl/my))}
+ const sk=ld(obs[0].d.getTime()),sh=s.shifts.filter(x=>String(x.d).slice(0,10)>=sk),hT=sh.length>=2?Math.min(12,Math.max(3,sh.reduce((t,x)=>t+x.min,0)/sh.length/60)):COH.hrs[wkey()];
+ const fm=FIXC.reduce((t,c)=>t+(+(s.fx||{})[c]||0),0),NW=obs.filter(o=>!o.worked),rc=NW.length?NW.reduce((t,o)=>t+o.exp,0)/NW.length:0;
+ return{ok:true,mu,pw,nd,mu0,rs,g,hT,fm,rc,nb:ys.length,n:Wk.length,days:obs.length,wks:Math.round(obs.length/7*10)/10,conf:obs.length<14?'baja':obs.length<28?'media':'alta',real:sh.length>=2}}
+/* Simulación Monte Carlo: 1.200 futuros posibles a 91 días (días de descanso, buenos y malos). Devuelve percentiles, no un solo número. */
+function simulate(pw,mu,M,seed,mult){const N=1200,T=91,S=T+1,out=new Float32Array(N*S),R=rng(seed),RL=rng(seed^0x9e3779b9),tau=Math.min(.3,.5/Math.sqrt(Math.max(1,M.n))),sd=COH.sig*Math.max(Math.abs(M.mu0),1000),qE=Math.min(1,M.rs.length/8),fd=M.fm/30,dw=[],G=[];
+ for(let t=1;t<=T;t++){dw[t]=WK(addD(today,t));const w=Math.ceil(t/7);if(!G[w]){let a=0;for(let j=1;j<=w;j++)a+=Math.pow(.85,j);G[w]=1+M.g*a}}
+ for(let i=0;i<N;i++){let c=0;const lv=Math.max(.4,1+gs(RL)*tau);for(let t=1;t<=T;t++){const d=dw[t];let n;
+  if(R()<pw[d]){const e=R()<qE?M.rs[(R()*M.rs.length)|0]:gs(R)*sd;n=mu[d]*lv*G[Math.ceil(t/7)]+e*(mult||1)}else n=-M.rc;
+  c+=n-fd;out[i*S+t]=c}}
+ const p10=[0],p50=[0],p90=[0],col=new Float32Array(N);
+ for(let t=1;t<=T;t++){for(let i=0;i<N;i++)col[i]=out[i*S+t];col.sort();p10[t]=col[Math.floor(.1*(N-1))];p50[t]=col[Math.floor(.5*(N-1))];p90[t]=col[Math.floor(.9*(N-1))]}
+ const gd=(s.meta||0)/7,pr={};[14,30,91].forEach(H=>{let k=0;for(let i=0;i<N;i++)if(out[i*S+H]>=gd*H)k++;pr[H]=k/N});
+ return{p10,p50,p90,pr}}
+/* Recomendación: qué días, cuántas horas y qué zona. Si no llegás a la meta, busca primero sumar días antes que alargar jornadas (y nunca pasa de 9-10 h). */
+function copRec(M){const meta=s.meta||0,wf=M.fm*7/30,tgt=meta+wf,ord=[0,1,2,3,4,5,6].sort((a,b)=>M.mu[b]-M.mu[a]),
+ gain=h=>h<=M.hT?h/M.hT:1+.8*(h/M.hT-1),kU=M.pw.reduce((a,b)=>a+b,0),
+ wk=(D,h)=>D.reduce((t,d)=>t+M.mu[d],0)*gain(h)-M.rc*(7-D.length)-wf,
+ cw=M.pw.reduce((t,p,d)=>t+p*M.mu[d],0)-M.rc*(7-kU)-wf,hC=Math.min(10,Math.max(9,M.hT+1));
+ let k,h,mode;
+ if(!meta||cw>=meta){k=Math.min(6,Math.max(2,Math.round(kU)));h=M.hT;mode=meta?'mejor':'libre'}
+ else{mode='meta';k=0;
+  for(let kk=2;kk<=6&&!k;kk++){const S=ord.slice(0,kk).reduce((t,d)=>t+M.mu[d],0),m=(tgt+M.rc*(7-kk))/S;if(m<=1){k=kk;h=Math.max(4,M.hT*m)}}
+  if(!k){k=6;const S=ord.slice(0,6).reduce((t,d)=>t+M.mu[d],0),m=(tgt+M.rc)/S;h=M.hT*(1+(m-1)/.8)}
+  h=Math.min(hC,Math.ceil(h*2)/2)}
+ if(mode!='meta')h=Math.round(h*2)/2;
+ const D=ord.slice(0,k).sort((a,b)=>a-b),pl=wk(D,h),L=zoneSet();let zs=null,pi1=0,pi2=null;
+ {const LL=L&&L.length?L:ZN,sc=PARTS.map((_,pi)=>{const v=LL.map(z=>D.reduce((t,d)=>t+dem(z,d,pi),0)/D.length).sort((a,b)=>b-a).slice(0,3);return v.reduce((a,b)=>a+b,0)/v.length}),oo=[0,1,2,3,4].sort((a,b)=>sc[b]-sc[a]);pi1=oo[0];if(h>4.5)pi2=oo[1];
+  if(L&&L.length)zs=L.map(z=>({z,v:D.reduce((t,d)=>t+dem(z,d,pi1),0)/D.length})).sort((a,b)=>b.v-a.v).slice(0,3).map(o=>o.z)}
+ return{apps:appRec(pi1,pi2),D,k,h,mode,pl,cw,kU,best:ord[0],worst:ord[6],zs,pi1,pi2,gain:gain(h),reach:!meta||pl>=meta-1,hn:tgt/(M.mu0/M.hT),pwP:[0,1,2,3,4,5,6].map(d=>D.includes(d)?1:0),muP:M.mu.map(v=>v*gain(h))}}
+let copC={k:'',v:null};
+function copGet(){const M=copModel();if(!M.ok)return M;
+ const sig=[s.ent.length,(s.apps||[]).join(),M.n,M.days,Math.round(M.mu0),Math.round(M.fm),s.meta,s.work,s.veh,s.zona,Math.round(M.hT*10),M.nd.join('')].join('|');
+ if(copC.k==sig)return copC.v;
+ let hh=7;for(const c of sig)hh=(Math.imul(hh,31)+c.charCodeAt(0))|0;
+ const rec=copRec(M),base=simulate(M.pw,M.mu,M,hh,1),plan=simulate(rec.pwP,rec.muP,M,hh,rec.gain),v={...M,rec,base,plan};copC={k:sig,v};return v}
+const BULB='<svg viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>';
+const bars2=(v,l,hi)=>{const mx=Math.max(1,...v.map(Math.abs));return `<div class="bars">${v.map((x,i)=>`<div><em>${x>=1000?(x/1000).toFixed(1)+'k':Math.round(x)}</em><b class="${hi.includes(i)?'':'dim'}" style="height:${Math.max(0,x)/mx*78}%"></b>${l[i]}</div>`).join('')}</div>`};
+function pjChart(M,H){const W=340,Hh=190,pl=46,pr=10,pt=10,pb=24,B=M.base,P=M.plan,meta=s.meta||0,gl=t=>meta/7*t;let hi=0,lo=0;
+ for(let t=0;t<=H;t++){hi=Math.max(hi,B.p90[t],P.p90[t],meta?gl(t):0);lo=Math.min(lo,B.p10[t],P.p10[t])}
+ hi=hi||1;const st=niceStep((hi-lo)/4),y0=Math.floor(lo/st)*st,y1=Math.ceil(hi/st)*st,X=t=>pl+t/H*(W-pl-pr),Y=v=>pt+(1-(v-y0)/(y1-y0))*(Hh-pt-pb),pt2=(a,t)=>X(t).toFixed(1)+' '+Y(a[t]).toFixed(1);
+ const ln=a=>a.slice(0,H+1).map((_,t)=>(t?'L':'M')+pt2(a,t)).join(''),up=B.p90.slice(0,H+1).map((_,t)=>pt2(B.p90,t)),dn=B.p10.slice(0,H+1).map((_,t)=>pt2(B.p10,t)).reverse();
+ const tk=H==14?[[0,'Hoy'],[7,'1 sem'],[14,'2 sem']]:H==30?[[0,'Hoy'],[7,'1 sem'],[14,'2 sem'],[21,'3 sem'],[30,'1 mes']]:[[0,'Hoy'],[30,'1 mes'],[61,'2 meses'],[91,'3 meses']];
+ let g='';for(let v=y0;v<=y1+1e-6;v+=st)g+=`<line x1="${pl}" x2="${W-pr}" y1="${Y(v).toFixed(1)}" y2="${Y(v).toFixed(1)}" stroke="var(--ln)" stroke-width="${Math.abs(v)<1e-6?1.6:.7}"/><text x="${pl-5}" y="${(Y(v)+3).toFixed(1)}" text-anchor="end">${fmtK(v)}</text>`;
+ window.PJ={W,pl,pr,pt,pb,Hh,H,y0,y1,B,P};
+ return `<svg id="pjc" class="pj" viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Proyección de ganancia neta">${g}${tk.map(([t,l])=>`<text x="${X(t).toFixed(1)}" y="${Hh-7}" text-anchor="${t==0?'start':t==H?'end':'middle'}">${l}</text>`).join('')}
+<path d="M${up.join('L')}L${dn.join('L')}Z" fill="var(--g)" opacity=".18"/>${meta?`<path d="${ln([...Array(H+1)].map((_,t)=>gl(t)))}" fill="none" stroke="var(--mu)" stroke-width="1.8" stroke-dasharray="2 4"/>`:''}
+<path d="${ln(P.p50)}" fill="none" stroke="#f59e0b" stroke-width="2.4" stroke-dasharray="6 4" stroke-linecap="round"/><path d="${ln(B.p50)}" fill="none" stroke="var(--g2)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<line id="pjl" x1="0" x2="0" y1="${pt}" y2="${Hh-pb}" stroke="var(--tx)" stroke-width="1" opacity="0" /><circle id="pjd" r="4.5" cx="0" cy="0" fill="var(--g2)" stroke="var(--ph)" stroke-width="2" opacity="0"/></svg>`}
+function pjMove(e){const sv=e.target.closest&&e.target.closest('#pjc'),P=window.PJ;if(!sv||!P)return;const r=sv.getBoundingClientRect(),fx=(e.clientX-r.left)/r.width*P.W;let t=Math.round((fx-P.pl)/(P.W-P.pl-P.pr)*P.H);t=Math.max(0,Math.min(P.H,t));
+ const x=P.pl+t/P.H*(P.W-P.pl-P.pr),Y=v=>P.pt+(1-(v-P.y0)/(P.y1-P.y0))*(P.Hh-P.pt-P.pb),l=$('#pjl'),d=$('#pjd'),tt=$('#pjt');
+ l.setAttribute('x1',x);l.setAttribute('x2',x);l.setAttribute('opacity',.4);d.setAttribute('cx',x);d.setAttribute('cy',Y(P.B.p50[t]));d.setAttribute('opacity',1);
+ const dd=addD(today,t).toLocaleDateString('es-AR',{weekday:'short',day:'numeric',month:'short'});
+ tt.innerHTML=t==0?'Hoy: desde acá proyectamos.':`<b style="color:var(--tx)">${dd}</b> · ~${fmt(P.B.p50[t])} <span>(entre ${fmtK(P.B.p10[t])} y ${fmtK(P.B.p90[t])})</span>`}
+['pointermove','pointerdown'].forEach(n=>document.addEventListener(n,pjMove,{passive:true}));
+/* ---------- Mapa real del AMBA (Leaflet + teselas de OpenStreetMap/CARTO) ---------- */
+const LEAF='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/';
+let MAP=null,ZL=null,TL=null,ME=null,mapWrap=null,mapEl=null,mapNote=null,leafP=null,tOk=0,tErr=0;
+const isDark=()=>{const t=document.documentElement.dataset.theme;return t=='dark'||(t!='light'&&matchMedia('(prefers-color-scheme:dark)').matches)};
+function leaf(){if(window.L)return Promise.resolve();if(leafP)return leafP;
+ leafP=new Promise((ok,no)=>{const l=document.createElement('link');l.rel='stylesheet';l.href=LEAF+'leaflet.min.css';document.head.appendChild(l);const c=document.createElement('script');c.src=LEAF+'leaflet.min.js';c.onload=ok;c.onerror=()=>{leafP=null;no()};document.head.appendChild(c)});return leafP}
+function setTiles(){if(!MAP)return;if(TL)MAP.removeLayer(TL);tOk=tErr=0;
+ TL=L.tileLayer(isDark()?'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png':'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:19,attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · © <a href="https://carto.com/attributions">CARTO</a>'}).addTo(MAP);
+ TL.on('tileload',()=>{tOk++;mapNote.classList.remove('on')});TL.on('tileerror',()=>{tErr++;if(tErr>=4&&!tOk){mapNote.textContent='Sin conexión: el mapa necesita internet para cargarse.';mapNote.classList.add('on')}})}
+function mapInit(){if(MAP)return;mapWrap=document.createElement('div');mapWrap.className='mapwrap';mapEl=document.createElement('div');mapEl.className='mapel';mapEl.style.cssText='position:absolute;top:0;right:0;bottom:0;left:0;z-index:0';mapNote=document.createElement('div');mapNote.className='mapnote';
+ mapWrap.innerHTML='<button class="mapbtn" data-a="locate" aria-label="Mi ubicación">📍</button>';mapWrap.append(mapEl,mapNote);
+ MAP=L.map(mapEl,{zoomControl:false,minZoom:9,maxZoom:17,maxBounds:[[-35.3,-59.3],[-34.0,-57.8]],maxBoundsViscosity:.8}).setView([-34.64,-58.47],11);
+ L.control.zoom({position:'topright'}).addTo(MAP);ZL=L.layerGroup().addTo(MAP);setTiles();
+ MAP.on('zoomend',()=>mapEl.classList.toggle('lowz',MAP.getZoom()<12));mapEl.classList.toggle('lowz',MAP.getZoom()<12);
+ try{matchMedia('(prefers-color-scheme:dark)').addEventListener('change',setTiles)}catch(e){}}
+const ramp=i=>`hsl(${Math.round(35+115*i/100)},70%,42%)`;
+function drawZones(){if(!MAP)return;ZL.clearLayers();const dw=s.mapDow==null?WK(today):s.mapDow,pi=s.mapPart==null?nowPart():s.mapPart;
+ zoneRanks(dw,pi).forEach(o=>{const z=o.z,c=ramp(o.idx),on=s.mz==z.id,ci=L.circle([z.la,z.ln],{radius:z.r,color:on?'#233351':c,weight:on?3:1.5,fillColor:c,fillOpacity:.18+.4*o.idx/100}).addTo(ZL);
+  ci.bindTooltip((o.rank<=3?'<b>'+o.rank+'</b>':'')+z.n,{permanent:true,direction:'center',className:'zl'+(o.rank<=3?' top':'')});ci.on('click',()=>{s.mz=z.id;render()})});
+ if(s.mzf&&s.mz){const z=ZN.find(x=>x.id==s.mz);if(z)MAP.flyTo([z.la,z.ln],Math.max(MAP.getZoom(),12),{duration:.6});s.mzf=0}}
+function mapSync(){if(!$('#mapHost'))return;
+ leaf().then(()=>{const h=$('#mapHost');if(!h||s.tab!='map')return;mapInit();if(mapWrap.parentNode!==h)h.appendChild(mapWrap);MAP.invalidateSize({animate:false,pan:false});if(!MAP._fit){{const V=[[-34.60,-58.44,12],[-34.52,-58.50,11],[-34.66,-58.62,11],[-34.72,-58.38,11]][GR.indexOf(s.zona)];if(V)MAP.setView([V[0],V[1]],V[2],{animate:false});else MAP.fitBounds([[-34.84,-58.76],[-34.42,-58.24]],{animate:false})}MAP._fit=1}drawZones()})
+ .catch(()=>{const h=$('#mapHost');if(h)h.innerHTML='<div class="card w" style="text-align:center"><b>No pudimos cargar el mapa</b><p>Revisá tu conexión y volvé a entrar a esta pestaña.</p></div>'})}
+
+function appRow(R){const A=R.apps,ic='<div class="ic">📱</div>';
+ if(A.none)return `<div class="rr">${ic}<div><b>App</b><div class="mu">${A.has?'Todavía no tenemos datos de tus apps.':'Elegí con qué apps trabajás en tu perfil y te digo cuál conviene.'}</div></div></div>`;
+ if(A.L.length==1)return `<div class="rr">${ic}<div><b>Seguí con ${esc(A.L[0])}</b><div class="mu">Con una sola app no hay con qué comparar: sumar otra podría darte más pedidos o viajes en las franjas flojas.</div></div></div>`;
+ const same=A.r.every(x=>x.a==A.r[0].a),tit=same?`${esc(A.r[0].a)} en ${A.r.map(x=>PARTS[x.pi][0].toLowerCase()).join(' y ')}`:A.r.map(x=>`${PARTS[x.pi][0]}: ${esc(x.a)}`).join(' · ');
+ return `<div class="rr">${ic}<div><b>${tit}</b><div class="mu">${A.own?'Según lo que cargaste de cada app.':'Estimación inicial por franja. Marcá de qué app es cada ingreso al cargarlo y se ajusta a tus datos.'}</div></div></div>`}
 /* ---------- pantallas ---------- */
 const V={
 welcome:()=>`<div class="scr" style="display:flex;flex-direction:column;justify-content:center;text-align:center"><div style="margin-bottom:14px">${logo(56)}</div>${mas('hello',170)}<h1 style="margin-top:12px">¡Hola! Bienvenid@ ;)</h1><p>Tu trabajo, más cerca</p><button class="btn" data-a="go:register">Registrarse</button><button class="btn s" data-a="go:login">Iniciar sesión</button></div>`,
@@ -195,7 +366,44 @@ act:()=>{const p=period(),r=s.range,mo=['Este mes','Mes anterior','Hace 2 meses'
  ${r=='month'?`<div class="chips" style="margin-bottom:10px">${mo.map((d,i)=>`<button class="chip ${s.mo==i?'on':''}" data-a="mo:${i}">${d}</button>`).join('')}</div>`:''}
  <div class="card"><div class="row mu"><span>Ingresos <b class="pos">${fmt(p.i)}</b></span><span>Gastos <b class="neg">${fmt(p.e)}</b></span></div><div class="mu" style="margin-top:6px">Neto</div><div class="big" style="${p.n<0?'color:#ef4444':''}">${fmt(p.n)}</div></div>
  ${p.bars?`<div class="card w">${bars(p.bars,p.labels)}</div>`:''}<h2>Movimientos</h2>${p.it.map(x=>`<div class="li"${x.id?` data-a="ed:${x.id}" style="cursor:pointer"`:''}><div class="ic">${x.ic||[...INC,...EXP,...s.newCats.inc,...s.newCats.exp].find(c=>c[1]==x.c)?.[0]||'💬'}</div><div>${esc(x.c)}${x.n?`<div class="mu">${esc(x.n)}</div>`:''}</div><span class="${x.t=='inc'?'pos':'neg'}">${x.t=='inc'?'+':'-'}${fmt(x.a)}</span>${x.id?'<span class="mu">›</span>':''}</div>`).join('')}</div>`},
-map:()=>`<div class="scr" style="text-align:center">${mas('map',150)}<h1>Mapa</h1><p>Próximamente: acá vas a ver tu recorrido y dónde y cuándo conviene salir.</p></div>`,
+cop:()=>{const M=copGet(),head=`<div class="row" style="margin-bottom:10px"><div><h1>Copiloto</h1><p>Tu proyección y qué te conviene hacer.</p></div><div class="bulbic">${BULB}</div></div>`;
+ if(!M.ok)return `<div class="scr">${head}<div class="card" style="text-align:center">${mas('hello',120)}<b>Estoy conociendo tu ritmo</b><p>Para proyectar y recomendarte necesito al menos una semana tuya, con ingresos cargados en 3 días o más.</p><div class="bar"><i style="width:${Math.min(100,Math.round(M.days/7*100))}%"></i></div><div class="mu">${Math.min(M.days,7)} de 7 días · ${M.worked} con ingresos</div><button class="btn" data-a="m:doc">Cargar un ingreso</button></div></div>`;
+ const R=M.rec,H=s.cph||30,B=M.base,P=M.plan,meta=s.meta||0,lb={14:'2 semanas',30:'1 mes',91:'3 meses'}[H],dl=P.p50[H]-B.p50[H],avg=M.mu.reduce((a,b)=>a+b,0)/7,up=Math.round((M.mu[R.best]/avg-1)*100),dn=Math.round((1-M.mu[R.worst]/avg)*100);
+ const ins=[];if(up>=5)ins.push(`Los <b>${dp(R.best)}</b> son tu mejor día: rinden un ${up}% más que tu promedio.`);else ins.push('Tus días rinden parecido entre sí: lo que más suma es la cantidad de horas.');
+ if(dn>=8)ins.push(`Los <b>${dp(R.worst)}</b> son los más flojos (${dn}% menos que tu promedio): ideales para descansar.`);
+ ins.push(`Tu neto ronda <b>${fmt(M.mu0/M.hT)}</b> por hora${M.real?'':' (estimado con una jornada típica de '+String(M.hT).replace('.',',')+' h; cargá tus jornadas para afinarlo)'}.`);
+ if(M.nb>=4&&Math.abs(M.g)>=.005)ins.push(`Tus últimas semanas vienen ${M.g>0?'subiendo':'bajando'} ~${Math.round(Math.abs(M.g)*100)}% por semana (lo tenemos en cuenta, pero amortiguado).`);
+ const hs=String(R.h).replace('.',','),mc={meta:`Para llegar a tu meta de ${fmt(meta)} por semana`,mejor:'Ya venís cumpliendo tu meta: el mismo esfuerzo, pero en tus mejores días',libre:'Para sacarle más a tu semana'}[R.mode];
+ return `<div class="scr">${head}
+<div class="card w"><b>Si seguís trabajando así…</b>
+<div class="seg" style="margin:10px 0 8px">${[[14,'2 semanas'],[30,'1 mes'],[91,'3 meses']].map(([k,l])=>`<button class="${H==k?'on':''}" data-a="cph:${k}">${l}</button>`).join('')}</div>
+<div class="mu">En ${lb} vas a llegar a unos</div><div class="big" style="${B.p50[H]<0?'color:#ef4444':''}">${fmt(B.p50[H])}</div><div class="mu">de ganancia neta · en pesos de hoy</div>
+<div id="pjt" class="mu" style="margin:8px 0 2px;min-height:15px">8 de cada 10 escenarios caen entre <b style="color:var(--tx)">${fmtK(B.p10[H])}</b> y <b style="color:var(--tx)">${fmtK(B.p90[H])}</b>. Deslizá el dedo por el gráfico.</div>
+${pjChart(M,H)}
+<div class="lg"><span><i style="border-color:var(--g2)"></i>Si seguís así</span><span><i class="bd"></i>Rango probable</span>${meta?'<span><i style="border-color:var(--mu);border-top-style:dotted"></i>Tu meta</span>':''}<span><i style="border-color:#f59e0b;border-top-style:dashed"></i>Plan Copiloto</span></div>
+${meta?`<div class="row" style="margin-top:12px;align-items:flex-start"><span>🎯 <b>${Math.round(B.pr[H]*100)}%</b> de chances de sostener tu meta de ${fmt(meta)} por semana durante ${lb}</span></div>`:`<button class="btn sm" data-a="meditor" style="margin-top:12px">Definir mi meta semanal</button>`}
+${M.fm>0?`<div class="mu" style="margin-top:8px">🧾 Ya descontamos tus gastos fijos (${fmt(M.fm)} por mes).</div>`:`<div class="mu" style="margin-top:8px">🧾 No cargaste gastos fijos, así que la proyección puede estar algo alta. <button class="lnk" style="width:auto;padding:0;font-size:12px" data-a="go:fixed">Cargarlos</button></div>`}</div>
+<div class="amb"><b class="pl">💡 Con el plan del Copiloto</b><div class="big" style="font-size:28px;margin-top:4px">${fmt(P.p50[H])}</div><p>${dl>=0?'+':'−'}${fmt(Math.abs(dl))} respecto de seguir igual, en ${lb}.${dl<0?' Pero con menos días de trabajo.':''}</p></div>
+<h2>Te conviene</h2><div class="card w"><p style="margin:0 0 4px">${mc}:</p>
+<div class="rr"><div class="ic">📅</div><div><b>Trabajar ${R.D.map(d=>DNL[d].slice(0,3)).join(' · ')}</b><div class="mu">${R.k} días por semana (hoy trabajás ~${String(Math.round(R.kU*10)/10).replace('.',',')})</div></div></div>
+<div class="rr"><div class="ic">⏱️</div><div><b>${hs} h por día</b><div class="mu">${String(Math.round(R.k*R.h*10)/10).replace('.',',')} h por semana${R.pi2!=null?'':''}</div></div></div>
+${R.zs?`<div class="rr"><div class="ic">📍</div><div><b>${R.zs.map(z=>esc(z.n)).join(', ')}</b><div class="mu">Franja fuerte: ${PARTS[R.pi1][1]} h (${PARTS[R.pi1][0].toLowerCase()})${R.pi2!=null?' · segunda: '+PARTS[R.pi2][1]+' h':''}</div></div></div>`:`<div class="rr"><div class="ic">📍</div><div><b>Zona</b><div class="mu">Por ahora solo cubrimos el AMBA.</div></div></div>`}
+${appRow(R)}
+<p style="margin:8px 0 0">Con esto estimamos <b style="color:var(--tx)">${fmt(R.pl)}</b> netos por semana, contra <b style="color:var(--tx)">${fmt(R.cw)}</b> si seguís igual${meta?' (tu meta: '+fmt(meta)+')':''}.</p>
+${R.reach?'':`<p style="margin-top:6px;color:#b45309"><b>Ojo:</b> con tu ritmo actual, llegar a tu meta pediría unas ${Math.round(R.hn)} horas por semana. Este es el plan más sano que alcanzamos; quizá te convenga ajustar la meta a ~${fmt(Math.floor(R.pl/1000)*1000)}.</p>`}
+${R.zs?'<button class="btn s" data-a="cmap">🗺️ Ver zonas en el mapa</button>':''}</div>
+<div class="card w"><b>Cuánto rinde cada día (por jornada)</b>${bars2(M.mu,DNS,R.D)}<div class="mu">En verde, los días del plan.</div><ul class="ins">${ins.map(t=>`<li>${t}</li>`).join('')}</ul></div>
+<div class="mu" style="margin:0 2px 10px">Confianza <b>${M.conf}</b> · se basa en ${M.n} jornadas tuyas de las últimas ${String(M.wks).replace('.',',')} semanas y en el patrón de riders parecidos. Son estimaciones, no promesas.</div>
+<button class="lnk" data-a="cophow">${s.how?'Ocultar cómo lo calculamos ▴':'¿Cómo lo calculamos? ▾'}</button>
+${s.how?`<div class="card w how"><b>Lo que hace el Copiloto por detrás</b><ol><li>Mira tus días y le da más peso a lo reciente.</li><li>Aprende cuánto rinde cada día de la semana y con qué frecuencia lo trabajás: no usa un promedio plano.</li><li>Cuando tenés pocos datos, los completa con el patrón de riders parecidos. <b>Hoy esos valores son una referencia inicial</b> que se va a reemplazar por los datos reales del piloto.</li><li>Tus gastos fijos se descuentan aparte, para que un mes de seguro no arruine un día.</li><li>Simula 1.200 semanas posibles, con días buenos, malos y de descanso, y por eso te muestra un rango en vez de un solo número.</li><li>Los montos están en pesos de hoy: no incluyen inflación.</li><li>La zona sale del patrón general de tu zona y tu vehículo, no de tus recorridos.</li></ol></div>`:''}</div>`},
+map:()=>{const dw=s.mapDow==null?WK(today):s.mapDow,pi=s.mapPart==null?nowPart():s.mapPart,rk=zoneRanks(dw,pi),sel=s.mz&&rk.find(o=>o.z.id==s.mz),mine=GR.indexOf(s.zona);
+ let card;if(sel){const z=sel.z,bp=[0,1,2,3,4].sort((a,b)=>dem(z,dw,b)-dem(z,dw,a))[0];card=`<div class="card w"><div class="row"><b style="font-size:16px">${esc(z.n)}</b><button class="lnk" style="width:auto;padding:0" data-a="zsel:">✕</button></div><div class="row" style="margin-top:6px"><span class="tag">Demanda ${lvl(sel.idx).toLowerCase()} · ${sel.idx}/100</span>${z.g==mine?'<span class="tag">Tu zona</span>':''}</div><p>Mejor franja ese día: <b style="color:var(--tx)">${PARTS[bp][1]} h</b> (${PARTS[bp][0].toLowerCase()}).${z.sat>=.6?' Suele haber mucha competencia entre riders.':z.sat<=.3?' Con poca competencia entre riders.':''}</p></div>`}
+ else card=`<div class="card w"><b>Mejores zonas · ${DNL[dw]}, ${PARTS[pi][0].toLowerCase()}</b>${rk.slice(0,3).map(o=>`<div class="zrow" data-a="zsel:${o.z.id}"><span class="rk">${o.rank}</span><div>${esc(o.z.n)}<div class="mu">${lvl(o.idx)} · ${o.idx}/100${o.z.g==mine?' · tu zona':''}</div></div><span class="mu">›</span></div>`).join('')}</div>`;
+ return `<div class="scr"><div class="row"><h1>Mapa</h1><span class="tag">Estimación inicial</span></div><p>Dónde hay más demanda en el AMBA según el día y la franja.</p>
+<div class="hscroll" style="margin-top:10px">${DNS.map((d,i)=>`<button class="chip ${dw==i?'on':''}" data-a="mdw:${i}">${d}</button>`).join('')}</div>
+<div class="hscroll">${PARTS.map((p,i)=>`<button class="chip ${pi==i?'on':''}" data-a="mpt:${i}">${p[0]}</button>`).join('')}</div>
+<div class="mapbox" id="mapHost"></div><div class="ramp"></div><div class="row mu" style="margin-bottom:10px"><span>Menos demanda</span><span>Más demanda</span></div>${card}
+<p class="mu" style="margin-top:4px">Los círculos son zonas aproximadas y la demanda es una estimación inicial: se va a ir afinando con los datos de los riders de CoPi.</p></div>`},
 me:()=>{const R=(i,x,d,a)=>`<div class="card w row" data-a="${a}" style="cursor:pointer"><span>${i} <b>${x}</b><div class="mu">${d}</div></span>›</div>`;
  return `<div class="scr"><div class="row"><h1>Perfil</h1>${mas('hello',70)}</div><div class="card"><b>${esc(s.fullname||s.name)}</b><p>${esc(s.work)}${s.veh?' · '+esc(s.veh):''} · ${esc(s.apps.join(', ')||'—')}${s.zona?' · '+esc(s.zona):''}</p></div>
 ${R('👤','Mis datos','Nombre y correo','go:p_data')}${R('🛵','Mi trabajo','Tipo, apps, vehículo y zona','pwork')}${R('🎯','Mi meta',s.meta?'Meta semanal: '+fmt(s.meta):'Todavía no definiste una meta','pgoal')}${R('🗓️','Gastos fijos mensuales',fxPend().length?'Tenés montos para revisar este mes':'Seguro, monotributo, alquiler, celular','go:fixed')}${R('⏱️','Mis jornadas','Esta semana: '+hrs(),'go:shifts')}${R('🔒','Mis datos y privacidad','Uso anónimo y borrado de cuenta','go:p_priv')}
@@ -211,17 +419,18 @@ p_priv:()=>`<div class="scr"><button class="back" data-a="x">← Volver</button>
 mic:()=>{const m=s.mic;return `<div class="scr" style="text-align:center"><button class="back" data-a="x">← Volver</button>${mas('listen',140)}<h1>Contá tu gasto o ingreso</h1><p>${CAN_SR?'Hablá y lo interpretamos solo. Si preferís, tocá “Listo” cuando termines. Ej: “El lunes pagué 3500 la cubierta”':'Escribilo o dictalo con el micrófono de tu teclado 🎙️. Ej: “Puse 15 mil de nafta”'}</p><textarea id="vt" rows="3" placeholder="Tocá acá y hablá o escribí…" style="margin-top:12px">${s.vt||''}</textarea>${CAN_SR&&s.rec?'<div class="wv"><i></i><i style="animation-delay:.15s"></i><i style="animation-delay:.3s"></i><i style="animation-delay:.45s"></i><i style="animation-delay:.6s"></i></div><p><b style="color:var(--g2)">Escuchando…</b> se corta solo cuando dejás de hablar</p><button class="btn s" data-a="rec">✓ Listo, ya terminé</button>':''}${CAN_SR&&!s.rec&&!(m&&m.ph==2)?'<button class="btn s" data-a="rec">🎙️ Hablar</button>':''}${!s.rec&&!(m&&m.ph==2)?'<button class="btn '+(CAN_SR?'s':'')+'" data-a="parse">Interpretar</button>':''}<p style="color:#ef4444">${s.err||''}</p>${m&&m.ph==2?`<div class="card w" style="text-align:left;margin-top:10px"><b>${m.t=='inc'?'Ingreso':'Gasto'} · ${m.c} · <span class="${m.t=='inc'?'pos':'neg'}">${fmt(m.a)}</span> · ${m.fd?new Date(m.fd+'T12:00').toLocaleDateString('es-AR',{weekday:'short',day:'numeric',month:'short'}):'hoy'}</b><button class="btn" data-a="mconf">Confirmar</button><button class="btn s" data-a="medit">Editar</button></div>`:''}</div>`},
 doc:()=>{const f=s.f,cats=catsFor(f);return `<div class="scr"><button class="back" data-a="x">← Volver</button><h1>${s.edit?'Editar movimiento':'Carga manual'}</h1>${s.edit?'':OCR_ON?`<button class="btn s" data-a="ocr" style="margin:0 0 6px">📷 Subir imagen o PDF (lectura OCR)</button><input type="file" id="fl" accept="image/*,application/pdf" hidden>`:`<button class="btn s" disabled style="margin:0 0 6px;opacity:.55;cursor:default">📷 Subir imagen o PDF <span class="tag">Próximamente</span></button>`}
 <div class="seg" style="margin-top:12px"><button class="${f.t=='inc'?'on':''}" data-a="ft:inc">Ingreso</button><button class="${f.t=='exp'?'on':''}" data-a="ft:exp">Gasto</button></div>
-<label>Monto</label><input id="fa" type="text" inputmode="numeric" class="money" autocomplete="off" placeholder="$0" value="${fmtN(f.a)}"><label>Categoría</label><div class="cg">${cats.main.map(c=>`<button class="cat ${f.c==c[1]?'on':''}" data-a="fc:${c[1]}"><span>${c[0]}</span>${esc(c[1])}</button>`).join('')}<button class="cat" data-a="nc"><span>＋</span>Nueva</button></div>${DESC[f.c]?`<p class="mu" style="margin-top:6px">${DESC[f.c]}</p>`:''}${cats.more.length?'<button class="lnk" data-a="more">Ver más categorías ▾</button>':''}
+<label>Monto</label><input id="fa" type="text" inputmode="numeric" class="money" autocomplete="off" placeholder="$0" value="${fmtN(f.a)}"><label>Categoría</label><div class="cg">${cats.main.map(c=>`<button class="cat ${f.c==c[1]?'on':''}" data-a="fc:${c[1]}"><span>${c[0]}</span>${esc(c[1])}</button>`).join('')}<button class="cat" data-a="nc"><span>＋</span>Nueva</button></div>${DESC[f.c]?`<p class="mu" style="margin-top:6px">${DESC[f.c]}</p>`:''}${cats.more.length?'<button class="lnk" data-a="more">Ver más categorías ▾</button>':''}${f.t=='inc'&&s.apps.length?`<label>¿De qué app? <span class="mu">(opcional, ayuda al Copiloto)</span></label><div class="hscroll">${s.apps.map(a=>`<button class="chip ${f.app==a?'on':''}" data-a="fapp:${esc(a)}">${esc(a)}</button>`).join('')}</div>`:''}
 ${f.nc?`<div class="card w" style="margin-top:10px"><input id="nn" placeholder="Nombre de la categoría"><div class="chips" style="margin-top:8px">${['🚗','🅿️','📱','🧴','🛠️','🧾','💳','🎁','🛵','☕'].map(e=>`<button class="chip ${f.em==e?'on':''}" data-a="em:${e}">${e}</button>`).join('')}</div><button class="btn sm" style="margin-top:10px" data-a="ncs">Crear</button></div>`:''}
 <label>Fecha</label><input id="fd" type="date" value="${f.d||key(today)}"><label>Nota (opcional)</label><input id="fn" value="${f.n}"><button class="btn" data-a="save">${s.edit?'Guardar cambios':'Guardar'}</button>${s.edit?`<button class="btn r" data-a="del">${s.delAsk?'Tocá de nuevo para eliminar':'Eliminar'}</button>`:''}</div>`}
 };
 function render(){
- const nav=['home','act','map','me'].includes(s.tab)&&s.scr=='app';
+ const nav=['home','act','cop','map','me'].includes(s.tab)&&s.scr=='app';
  let body=s.scr=='app'?V[s.tab]():V[s.scr]();
- const prev=$('.scr'),pk=s.scr+s.tab,st=prev&&s._pk==pk?prev.scrollTop:0;s._pk=pk;$('#app').innerHTML=body+(nav?`<div class="nav">${NAV.map(([k,l,i])=>k=='plus'?`<button class="plus" data-a="plus" aria-label="Agregar"><svg viewBox="0 0 24 24" style="width:28px;height:28px;stroke:#fff;stroke-width:3"><path d="M12 5v14M5 12h14"/></svg></button>`:`<button class="${s.tab==k?'on':''}" data-a="tab:${k}">${i}${l}</button>`).join('')}</div>`:'')
+ const prev=$('.scr'),pk=s.scr+s.tab,st=prev&&s._pk==pk?prev.scrollTop:0;s._pk=pk;$('#app').innerHTML=body+(nav?`<div class="nav">${NAV.map(([k,l,i])=>`<button class="${s.tab==k?'on':''}" data-a="tab:${k}">${i}${l}</button>`).join('')}</div><button class="plus ${s.plus?'open':''}" data-a="plus" aria-label="Agregar"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>`:'')
  +(s.plus?`<div class="ov" data-a="plusx"><div class="fab"><button data-a="m:mic"><span>🎙️</span>Micrófono</button><button data-a="m:doc"><span>✍️</span>Carga manual</button></div></div>`:'')+(s.medit?`<div class="ov2" data-a="mclose"></div><div class="msheet"><b>Tu meta semanal</b><input id="mi" type="text" inputmode="numeric" class="money" autocomplete="off" placeholder="$" value="${fmtN(s.meta)}"><button class="btn" data-a="msave">Guardar</button></div>`:'')+(s.toast?`<div class="toast">${s.toast}</div>`:'');if(s.toast){const t=s.toast;setTimeout(()=>{if(s.toast==t){s.toast='';render()}},4000)}
  if(s.scr=='register'&&s.rf)for(const[k,v]of Object.entries(s.rf)){const e=$('#'+k);if(e){if(e.type=='checkbox')e.checked=v;else e.value=v}}
  restoreRF();{const n2=$('.scr');if(n2)n2.scrollTop=st}
+ $('#app').classList.toggle('hasnav',nav);if(nav&&s.tab=='map')mapSync()
 }
 function entry(t,c,a,d,ic,n){const L={id:'l'+Date.now(),t,c,a:+a,d:d||key(today),n:n||'',ic:ic||[...INC,...EXP,...s.newCats.inc,...s.newCats.exp].find(x=>x[1]==c)?.[0]||'💬'};
  api({action:'addEntry',userId:SES.uid,codigo:SES.code,tipo:t,categoria:c,grupo:grp(c),monto:+a,fecha:L.d,nota:L.n,origen:s.org||'manual'}).then(r=>{if(r&&r.id)L.id=r.id});s.org='';s.ent.push(L)}
@@ -253,8 +462,14 @@ nt:()=>{s.scr='notifs';return loadNt()},
 helpsend:async()=>{const t=$('#hm').value.trim();s.hm=t;s.err='';if(!t){s.err='Escribí tu consulta.';return}
  const r=await api({action:'help',userId:SES.uid,codigo:SES.code,mensaje:t});if(!r.ok){s.err='No se pudo enviar. Probá de nuevo.';return}
  s.hm='';s.toast='Recibimos tu mensaje. Te respondemos pronto.';s.scr='app';s.tab='me'},
-plus:()=>s.plus=true,plusx:()=>s.plus=false,m:v=>{s.plus=false;s.scr=v;s.mic=null;s.edit=null;s.delAsk=0;s.org='';s.err='';if(v=='mic'){s.vt='';startRec()}},
+plus:()=>s.plus=!s.plus,plusx:()=>s.plus=false,m:v=>{s.plus=false;s.scr=v;s.mic=null;s.edit=null;s.delAsk=0;s.org='';s.err='';if(v=='mic'){s.vt='';startRec()}},
 rg:v=>s.range=v,dy:v=>s.day=+v,mo:v=>s.mo=+v,
+cph:v=>s.cph=+v,cophow:()=>s.how=!s.how,
+cmap:()=>{const R=copGet().rec;if(R){s.mapDow=R.best;s.mapPart=R.pi1;s.mz=null}s.tab='map';ev('ver_map')},
+mdw:v=>s.mapDow=+v,mpt:v=>s.mapPart=+v,zsel:v=>{s.mz=v||null;s.mzf=!!v},
+locate:()=>{if(!MAP)return;if(!navigator.geolocation){s.toast='Tu navegador no permite usar la ubicación.';return}
+ navigator.geolocation.getCurrentPosition(p=>{if(ME)MAP.removeLayer(ME);ME=L.circleMarker([p.coords.latitude,p.coords.longitude],{radius:8,color:'#fff',weight:3,fillColor:'#2563eb',fillOpacity:1}).addTo(MAP);MAP.flyTo([p.coords.latitude,p.coords.longitude],14,{duration:.6})},()=>{s.toast='No pude ver tu ubicación. Revisá el permiso del navegador.';render()},{enableHighAccuracy:true,timeout:8000});s.keep=1;return Promise.resolve()},
+
 clock:()=>{if(s.since){const fin=Date.now(),min=Math.min(960,Math.max(1,Math.round((fin-s.since)/6e4))),sh={id:'l'+fin,ini:s.since,fin,min,d:key(today)};s.shifts.push(sh);
   api({action:'addShift',userId:SES.uid,codigo:SES.code,inicio:new Date(s.since).toISOString(),fin:new Date(fin).toISOString(),minutos:min,fecha:key(today)}).then(r=>{if(r&&r.id)sh.id=r.id});
   s.since=null;LS.set('shift',{});s.toast='Guardamos tu jornada: '+Math.floor(min/60)+' h '+min%60+' min'}
@@ -285,9 +500,9 @@ shdel:()=>{if(!s.delAsk){s.delAsk=1;return}const id=s.sh.id;s.shifts=s.shifts.fi
 agr:()=>{s.agr=!s.agr;saveProfile()},
 delacc:()=>{if(!s.delAsk){s.delAsk=1;return}api({action:'help',userId:SES.uid,codigo:SES.code,mensaje:'PEDIDO DE BORRADO DE CUENTA'});s.delAsk=0;s.toast='Recibimos tu pedido. El equipo te va a escribir.';s.scr='app'},
 out:()=>{SES={};LS.set('ses',{});s.apps=[];s.fx={};s.fullname='';s.email='';s.est='';s.obq='';s.shifts=[];s.ent=[];s.ntl=[];s.zona='';s.veh='';s.rf=null;s.meta=DEMO?180000:0;s.scr='welcome'},doc:()=>{s.scr='doc'},
-ft:v=>{keep();s.f.t=v;s.f.c=v=='inc'?'Cobro de app':defExp()},fc:v=>{keep();s.f.c=v},nc:()=>{keep();s.f.nc=!s.f.nc},em:v=>{keep();s.f.em=v},
+fapp:v=>{keep();s.f.app=s.f.app==v?'':v},ft:v=>{keep();s.f.t=v;s.f.c=v=='inc'?'Cobro de app':defExp()},fc:v=>{keep();s.f.c=v},nc:()=>{keep();s.f.nc=!s.f.nc},em:v=>{keep();s.f.em=v},
 ncs:()=>{const n=$('#nn').value.trim();if(!n)return;keep();s.newCats[s.f.t].push([s.f.em||'🏷️',n]);s.f.c=n;s.f.nc=false;s.f.em=null},
-save:()=>{keep();const f=s.f,fd=$('#fd').value;if(!(+f.a>0)){s.toast='Ingresá un monto';return}
+save:()=>{keep();const f=s.f,fd=$('#fd').value;if(f.t=='inc'&&f.app&&!nrm(f.n).includes(nrm(f.app)))f.n=(f.n?f.n+' · ':'')+f.app;if(!(+f.a>0)){s.toast='Ingresá un monto';return}
  if(s.edit){const e=s.ent.find(x=>x.id==s.edit);if(e){Object.assign(e,{t:f.t,c:f.c,a:+f.a,d:fd,n:f.n,ic:[...INC,...EXP,...s.newCats.inc,...s.newCats.exp].find(x=>x[1]==f.c)?.[0]||'💬'});
   api({action:'updateEntry',userId:SES.uid,codigo:SES.code,id:e.id,tipo:f.t,categoria:f.c,grupo:grp(f.c),monto:+f.a,fecha:fd,nota:f.n})}
   s.edit=null;s.delAsk=0;s.f={t:'exp',c:defExp(),a:'',n:''};s.scr='app';s.tab='act';s.toast='Cambios guardados';return}
