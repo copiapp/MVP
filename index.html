@@ -126,8 +126,12 @@ const ev=(e,d)=>SES.uid?api({action:'event',userId:SES.uid,codigo:SES.code,event
 async function load(){const r=await api({action:'getEntries',userId:SES.uid,codigo:SES.code});if(r.ok&&r.entries)s.ent=r.entries.map(e=>({t:e.tipo,c:LEG[e.categoria]||e.categoria,a:+e.monto,d:String(e.fecha).slice(0,10),id:e.id,n:e.nota}));LS.set('ce_'+SES.uid,s.ent)}
 const b64=f=>new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(String(r.result).split(',')[1]);r.onerror=no;r.readAsDataURL(f)});
 const shrink=f=>new Promise((ok,no)=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const k=Math.min(1,1400/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',.8).split(',')[1])};im.onerror=no;im.src=u});
+const SPW={un:1,una:1,uno:1,dos:2,tres:3,cuatro:4,cinco:5,seis:6,siete:7,ocho:8,nueve:9,diez:10,once:11,doce:12,trece:13,catorce:14,quince:15,dieciseis:16,diecisiete:17,dieciocho:18,diecinueve:19,veinte:20,veinticinco:25,treinta:30,cuarenta:40,cincuenta:50,sesenta:60,setenta:70,ochenta:80,noventa:90,cien:100,ciento:100},SPH={cien:100,ciento:100,doscientos:200,trescientos:300,cuatrocientos:400,quinientos:500,seiscientos:600,setecientos:700,ochocientos:800,novecientos:900},SPN=Object.keys(SPW).join('|'),SPHN=Object.keys(SPH).join('|');
+function spoken(x){const U=u=>/^palo/.test(u)?1e6:1e3,tail=(v,u,h,c)=>{if(h)v+=U(u)/2;if(c)v+=SPH[c];return String(Math.round(v))};
+ x=x.replace(new RegExp('\\b(\\d+(?:[.,]\\d+)?|'+SPN+')\\s+(mil|lucas?|palos?)(?:\\s+y\\s+(media|medio)|\\s+('+SPHN+'))?\\b','g'),(m,a,u,h,c)=>{const n=SPW[a]!=null?SPW[a]:parseFloat(a.replace(',','.'));return isNaN(n)?m:tail(n*U(u),u,h,c)});
+ return x.replace(new RegExp('\\b(mil|luca|palo)(?:\\s+y\\s+(media|medio)|\\s+('+SPHN+'))?\\b','g'),(m,u,h,c)=>tail(U(u),u,h,c))}
 function norm(t){const W={un:1,uno:1,dos:2,tres:3,cuatro:4,cinco:5,seis:6,siete:7,ocho:8,nueve:9,diez:10,quince:15,veinte:20,treinta:30,cuarenta:40,cincuenta:50,sesenta:60,setenta:70,ochenta:80,noventa:90,cien:100,ciento:100};
- return t.toLowerCase().replace(/(\d{1,3})(?:[\s\u00a0\u202f]*[.,][\s\u00a0\u202f]*|[\s\u00a0\u202f]+)(\d{3})(?!\d)/g,'$1$2').replace(/(\d{1,3})(?:[\s\u00a0\u202f]*[.,][\s\u00a0\u202f]*|[\s\u00a0\u202f]+)(\d{3})(?!\d)/g,'$1$2').replace(/\b(un|uno|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|quince|veinte|treinta|cuarenta|cincuenta|sesenta|setenta|ochenta|noventa|cien|ciento)\s+(mil)\b/g,(m,a)=>W[a]+' mil')}
+ return spoken(t.toLowerCase()).replace(/(\d{1,3})(?:[\s\u00a0\u202f]*[.,][\s\u00a0\u202f]*|[\s\u00a0\u202f]+)(\d{3})(?!\d)/g,'$1$2').replace(/(\d{1,3})(?:[\s\u00a0\u202f]*[.,][\s\u00a0\u202f]*|[\s\u00a0\u202f]+)(\d{3})(?!\d)/g,'$1$2').replace(/\b(un|uno|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|quince|veinte|treinta|cuarenta|cincuenta|sesenta|setenta|ochenta|noventa|cien|ciento)\s+(mil)\b/g,(m,a)=>W[a]+' mil')}
 function pdate(t){let x=String(t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''),d=null,m;
  const W={un:1,dos:2,tres:3,cuatro:4,cinco:5,seis:6,siete:7},cut=r=>{x=x.replace(r,' ')},MS=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
  if(m=x.match(/\bhace (\d{1,2}|un|dos|tres|cuatro|cinco|seis|siete) dias?\b/)){d=addD(today,-(W[m[1]]||+m[1]));cut(m[0])}
@@ -135,12 +139,12 @@ function pdate(t){let x=String(t).toLowerCase().normalize('NFD').replace(/[\u030
  else if(m=x.match(/\bayer\b/)){d=addD(today,-1);cut(m[0])}
  else if(m=x.match(/\bhoy\b/)){d=today;cut(m[0])}
  else if(m=x.match(/\b(?:el |este |del )?(domingo|lunes|martes|miercoles|jueves|viernes|sabado)(?: pasado)?\b/)){const w={domingo:0,lunes:1,martes:2,miercoles:3,jueves:4,viernes:5,sabado:6}[m[1]];let b=(today.getDay()-w+7)%7;if(b==0)b=7;d=addD(today,-b);cut(m[0])}
- else if(m=x.match(/\bel (?:dia )?(\d{1,2})(?! ?(?:mil|k|lucas)\b)(?: de (enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre))?\b/)){
+ else if(m=x.match(/\bel (?:dia )?(\d{1,2})(?! ?(?:mil|k|lucas?)\b)(?: de (enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre))?\b/)){
   const dd=+m[1];let y=today.getFullYear(),mo=m[2]?MS.indexOf(m[2]):today.getMonth();
   if(m[2]){if(new Date(y,mo,dd,12)>today)y--}else if(dd>today.getDate()){mo--;if(mo<0){mo=11;y--}}
   const c=new Date(y,mo,dd,12);if(dd>=1&&c.getDate()==dd){d=c;cut(m[0])}}
  return{d:d?key(d):null,rest:x.replace(/\s+/g,' ').trim()}}
-function lp(t){const x=norm(t),m=x.match(/(\d+(?:[.,]\d+)?)\s*(mil|k|lucas)?/);if(!m)return null;
+function lp(t){const x=norm(t),m=x.match(/(\d+(?:[.,]\d+)?)\s*(mil|k|lucas?)?/);if(!m)return null;
  const n=m[1];let a=/^\d{1,3}(\.\d{3})+$/.test(n)?+n.replace(/\./g,''):parseFloat(n.replace(',','.'));if(m[2]&&a<1000)a*=1000;
  const inc=/cobr|pagaron|dieron|ingres|gan[eé]|propina|bono|incentivo|premio|recompensa/.test(x)&&!/gast|puse|compr|pagu[eé]/.test(x);
  const c=inc?(/propina/.test(x)?'Propina':/bono|incentivo|premio|recompensa/.test(x)?'Bono':/aparte|efectivo/.test(x)?'Cobro aparte':'Cobro de app'):/nafta|combustible|gnc|gasoil|carg[uú]e/.test(x)?'Combustible':/seguro/.test(x)?'Seguro':/monotributo|impuesto|afip|arca/.test(x)?'Impuestos':/alquiler|cuota/.test(x)?'Alquiler o cuota':/celular|datos|internet|recarga/.test(x)?'Celular':/casco|mochila|campera|equipamiento|guantes/.test(x)?'Equipamiento':/estacion|peaje|garage|cochera/.test(x)?'Peajes y estac.':/comida|com[ií]|almuerzo|caf[eé]|cena/.test(x)?'Comida':/limpi|lav/.test(x)?'Limpieza':/arreglo|taller|mec[aá]nic|service|cubierta|rueda|aceite|repar/.test(x)?'Mantenimiento':'Otro';
