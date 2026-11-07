@@ -58,3 +58,9 @@ El ícono de pestaña (`favicon.ico`, `icons/icon-48.png`, `icons/icon-96.png`) 
 ## Links
 - App: `https://USUARIO.github.io/REPO/`
 - Panel de administración: `https://USUARIO.github.io/REPO/admin.html`
+
+## Novedades (Tu Copiloto, combustible, rendimiento)
+- **Tu Copiloto:** primero la recomendación, después el gráfico "cómo venís ahora vs. el plan de Tu Copiloto".
+- **Combustible estimado:** con el vehículo (tipo, modelo y año, opcionales) y los km del recorrido. Precio del litro en `config.js` (`FUEL_PRICE`). Consumos de referencia en `fuelRate()` (`index.html`).
+- **Backend y admin:** ver `apps-script/PARCHE-BACKEND.md`.
+- **Rendimiento:** mascotas comprimidas, service worker nuevo (`copi-v6`), carga en paralelo y datos en caché al abrir.
