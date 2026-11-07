@@ -183,7 +183,7 @@ function period(){
 function agg(it){const m={};it.forEach(x=>{const k=x.id||(x.t+x.c);m[k]=m[k]||{...x,a:0};m[k].a+=x.a});return Object.values(m)}
 const bars=(b,l)=>{const mx=Math.max(1,...b);return `<div class="bars">${b.map((v,i)=>`<div><em>${v>=1000?(v/1000).toFixed(1)+'k':v}</em><b style="height:${Math.max(0,v)/mx*78}%"></b>${l[i]}</div>`).join('')}</div>`};
 const ico=p=>`<svg viewBox="0 0 24 24">${p}</svg>`;
-const NAV=[['home','Inicio',ico('<path d="M3 11l9-8 9 8v10H3z"/>')],['act','Actividad',ico('<path d="M5 20V10M12 20V4M19 20v-7"/>')],['cop','Tu Copiloto','<span class="sil"></span>'],['map','Mapa',ico('<path d="M12 21s7-6 7-11a7 7 0 10-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>')],['me','Perfil',ico('<circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 15-5 16 0"/>')]];
+const NAV=[['home','Inicio',ico('<path d="M3 11l9-8 9 8v10H3z"/>')],['act','Actividad',ico('<path d="M5 20V10M12 20V4M19 20v-7"/>')],['cop','Copiloto','<span class="sil"></span>'],['map','Mapa',ico('<path d="M12 21s7-6 7-11a7 7 0 10-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>')],['me','Perfil',ico('<circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 15-5 16 0"/>')]];
 const wkMin=()=>{const a=new Date(mon).setHours(0,0,0,0),b=a+7*864e5;return s.shifts.filter(x=>x.ini>=a&&x.ini<b).reduce((t,x)=>t+x.min,0)+(s.since?Math.round((Date.now()-s.since)/6e4):0)};
 const hrs=()=>{const m=wkMin();return Math.floor(m/60)+' h '+m%60+' min'};
 
