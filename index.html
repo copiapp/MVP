@@ -73,6 +73,14 @@ svg.map{width:100%;border-radius:20px;background:var(--card)}
 .ramp{height:8px;border-radius:9px;background:linear-gradient(90deg,hsl(35,70%,45%),hsl(92,70%,45%),hsl(150,70%,45%));margin:8px 0 3px}
 .hscroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:6px;scrollbar-width:none}.hscroll::-webkit-scrollbar{display:none}.hscroll .chip{white-space:nowrap;flex:none}
 .zrow{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--ln);cursor:pointer}.zrow:last-child{border-bottom:0}.zrow .rk{width:26px;height:26px;border-radius:50%;background:var(--g);color:#fff;font:800 13px Poppins,sans-serif;display:grid;place-items:center;flex:none}.zrow div{flex:1;font-weight:800;font-size:14px}
+.plus{left:auto;right:14px}
+.ov{align-items:flex-end;padding:0 14px 142px 0}.fab{align-items:flex-end}
+.sil{display:inline-block;width:26px;height:26px;background:currentColor;-webkit-mask:url(copi-sil.png) center/contain no-repeat;mask:url(copi-sil.png) center/contain no-repeat}.nav .sil{width:28px;height:28px}
+.cpic{width:46px;height:46px;border-radius:50%;background:var(--gl);color:var(--g2);display:grid;place-items:center;flex:none}.cpic .sil{width:30px;height:30px}
+.btn:disabled{opacity:.45;cursor:default}
+.li.sub{padding-left:50px;border-bottom-style:dashed}.li.sub>div:first-child{flex:1;font-size:13px;font-weight:600;color:var(--mu)}
+.ch2{display:flex;align-items:flex-start;gap:14px;margin:12px 0 4px}.ch2>div{flex:1}.ch2 b{font-size:24px;font-family:Poppins,Montserrat,sans-serif}.ch2 .ar{flex:none;color:var(--mu);font-size:20px}
+.pick{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
 </style></head>
 <body>
 
@@ -95,6 +103,7 @@ function saveRF(){s.rf=s.rf||{};['rc','rn','re','rt','rzo','rk','rk2'].forEach(k
 function restoreRF(){if(s.scr!='register'||!s.rf)return;for(const k in s.rf){const e=$('#'+k);if(e){if(e.type=='checkbox')e.checked=s.rf[k];else e.value=s.rf[k]}}}
 const logo=(h=34)=>`<img class="logo-l" src="logo-claro.png" alt="CoPi" style="height:${h}px;width:auto"><img class="logo-d" src="logo-oscuro.png" alt="CoPi" style="height:${h}px;width:auto">`;
 const ZONAS=['CABA','GBA zona norte','GBA zona oeste','GBA zona sur','Otra provincia'];
+const zl=z=>String(z||'').split(',').map(x=>x.trim()).filter(Boolean);
 const esc=t=>String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const sug=()=>Math.round((+s.est)*1.1/1000)*1000;
 const saveProf=()=>{saveLocal();return api({action:'setProfile',userId:SES.uid,codigo:SES.code,cuenta:s.obq||'',estimado:s.est||'',meta:s.meta||''})};
@@ -107,7 +116,7 @@ function autoNt(){const a=[],hr=new Date().getHours();
  if(hr>=19&&!s.ent.some(e=>e.d==key(today)))a.push({id:'auto-carga-'+key(today),titulo:'Hoy todavía no cargaste nada',texto:'Sumá tus ingresos y gastos del día para que los totales sean reales.'});
  return a}
 async function loadNt(){const r=await api({action:'notifs',userId:SES.uid,codigo:SES.code});s.ntl=[...autoNt(),...((r&&r.items)||[])]}
-async function loadShifts(){const r=await api({action:'getShifts',userId:SES.uid,codigo:SES.code});if(r&&r.shifts)s.shifts=r.shifts.map(x=>({id:x.id,ini:new Date(x.inicio).getTime(),fin:new Date(x.fin).getTime(),min:+x.minutos,d:x.fecha}))}
+async function loadShifts(){const r=await api({action:'getShifts',userId:SES.uid,codigo:SES.code});if(r&&r.shifts)s.shifts=r.shifts.map(x=>({id:x.id,ini:new Date(x.inicio).getTime(),fin:new Date(x.fin).getTime(),min:+x.minutos,d:x.fecha,apps:x.apps?String(x.apps).split(',').map(a=>a.trim()).filter(Boolean):((LS.get('shapps')||{})[new Date(x.inicio).getTime()]||[])}))}
 const OCRERR=e=>!e?'No encontré un monto en el comprobante. Cargalo a mano.':e=='falta_ANTHROPIC_KEY'?'La lectura con IA todavía no está configurada (falta la clave).':/^ia_error_401/.test(e)?'La clave de IA no es válida.':/^ia_error_(400|404)/.test(e)?'El modelo de IA no está disponible. Avisá al equipo.':e=='offline'?'Sin conexión. Probá de nuevo.':e=='no_autorizado'?'Tu sesión venció. Volvé a iniciar sesión.':e=='archivo_grande'?'El archivo es muy grande.':'No pude leerlo ('+e+'). Cargalo a mano.';
 const unread=()=>(s.ntl||[]).filter(n=>!(LS.get('read')||[]).includes(n.id)).length;
 function markRead(){LS.set('read',(s.ntl||[]).map(n=>n.id))}
@@ -151,7 +160,7 @@ const normFx=o=>{const r={};for(const k in o||{})r[LEG[k]||k]=o[k];return r};
 const PV=['Combustible','Mantenimiento','Impuestos','Alquiler o cuota','Seguro','Comida'];
 const PRIM={Bicicleta:['Mantenimiento','Impuestos','Celular','Equipamiento','Comida','Otro'],Moto:PV,Auto:PV,Otro:PV};
 const HW=[12400,18700,22100,16500,24800,20300,13600],DN=['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'],GOAL=180000;
-let s={scr:'welcome',tab:'home',prem:false,meta:(/[?&]demo=1/.test(location.search)||!(window.COPI_CONFIG&&COPI_CONFIG.API))?180000:0,zona:'',obs:0,name:'Facu',work:'Repartidor',apps:[],conn:[],range:'week',day:0,mo:0,ent:[],newCats:{inc:[],exp:[]},plus:false,pl:null,from:'onb',f:{t:'exp',c:'Combustible',a:'',n:'',cr:0},mic:null,since:(LS.get('shift')||{}).since||null,shifts:[],fullname:'',email:'',agr:false,fx:{},obq:'',est:''};
+let s={scr:'welcome',tab:'home',prem:false,meta:(/[?&]demo=1/.test(location.search)||!(window.COPI_CONFIG&&COPI_CONFIG.API))?180000:0,zona:'',obs:0,name:'Facu',work:'Repartidor',apps:[],conn:[],range:'week',day:0,mo:0,ent:[],newCats:{inc:[],exp:[]},plus:false,pl:null,from:'onb',f:{t:'exp',c:'Combustible',a:'',n:'',cr:0},mic:null,since:(LS.get('shift')||{}).since||null,sapps:(LS.get('shift')||{}).apps||[],pick:[],shifts:[],fullname:'',email:'',agr:false,fx:{},obq:'',est:''};
 const today=new Date();today.setHours(12,0,0,0);
 const key=d=>d.toISOString().slice(0,10);
 const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
@@ -173,7 +182,7 @@ function period(){
 function agg(it){const m={};it.forEach(x=>{const k=x.id||(x.t+x.c);m[k]=m[k]||{...x,a:0};m[k].a+=x.a});return Object.values(m)}
 const bars=(b,l)=>{const mx=Math.max(1,...b);return `<div class="bars">${b.map((v,i)=>`<div><em>${v>=1000?(v/1000).toFixed(1)+'k':v}</em><b style="height:${Math.max(0,v)/mx*78}%"></b>${l[i]}</div>`).join('')}</div>`};
 const ico=p=>`<svg viewBox="0 0 24 24">${p}</svg>`;
-const NAV=[['home','Inicio',ico('<path d="M3 11l9-8 9 8v10H3z"/>')],['act','Actividad',ico('<path d="M5 20V10M12 20V4M19 20v-7"/>')],['cop','Copiloto','<svg viewBox="0 0 24 24" class="bulb"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>'],['map','Mapa',ico('<path d="M12 21s7-6 7-11a7 7 0 10-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>')],['me','Perfil',ico('<circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 15-5 16 0"/>')]];
+const NAV=[['home','Inicio',ico('<path d="M3 11l9-8 9 8v10H3z"/>')],['act','Actividad',ico('<path d="M5 20V10M12 20V4M19 20v-7"/>')],['cop','Copiloto','<span class="sil"></span>'],['map','Mapa',ico('<path d="M12 21s7-6 7-11a7 7 0 10-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>')],['me','Perfil',ico('<circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 15-5 16 0"/>')]];
 const wkMin=()=>{const a=new Date(mon).setHours(0,0,0,0),b=a+7*864e5;return s.shifts.filter(x=>x.ini>=a&&x.ini<b).reduce((t,x)=>t+x.min,0)+(s.since?Math.round((Date.now()-s.since)/6e4):0)};
 const hrs=()=>{const m=wkMin();return Math.floor(m/60)+' h '+m%60+' min'};
 
@@ -199,10 +208,11 @@ const DNL=['lunes','martes','miércoles','jueves','viernes','sábado','domingo']
 const PARTS=[['Mañana','7 a 11'],['Almuerzo','11 a 15'],['Tarde','15 a 19'],['Cena','19 a 23'],['Noche','23 a 3']];
 const wkey=()=>s.work=='Conductor'?'con':s.work=='Ambos'?'amb':'rep';
 const drv=()=>s.work=='Conductor'?1:s.work=='Ambos'?.5:0;
+/* Horas por jornada (hrs): promedio de la encuesta propia de CoPi (89 respuestas, punto medio de cada tramo, '+8 h'=9,5): reparto ~7,1 h, transporte ~7,6 h. */
 /* PRIOR DE COHORTE ("lo que hacen riders como vos").
    OJO: son valores iniciales de referencia, NO datos medidos del piloto. Reemplazar con datos reales cuando haya volumen.
    idx = rendimiento relativo por día (Lun→Dom); hrs = horas típicas por jornada; sig = variabilidad típica de un día. */
-const COH={idx:{rep:[.86,.88,.93,.98,1.14,1.2,1.07],con:[.95,.97,1,1.05,1.17,1.12,.78]},hrs:{rep:7,con:8,amb:7.5},sig:.28};
+const COH={idx:{rep:[.86,.88,.93,.98,1.14,1.2,1.07],con:[.95,.97,1,1.05,1.17,1.12,.78]},hrs:{rep:7,con:7.5,amb:7.5},sig:.28};
 function cohIdx(){const k=wkey(),a=k=='amb'?COH.idx.rep.map((v,i)=>(v+COH.idx.con[i])/2):COH.idx[k],m=a.reduce((x,y)=>x+y,0)/7;return a.map(v=>v/m)}
 /* Demanda relativa por tipo de zona × franja (Mañana, Almuerzo, Tarde, Cena, Noche). l = lunes a jueves, f = viernes noche a domingo. También prior inicial. */
 const ZT={ofi:{l:[1,1.3,.9,.6,.2],f:[.2,.3,.3,.4,.2]},res:{l:[.4,.8,.7,1.3,.5],f:[.4,1.1,.9,1.4,.7]},mix:{l:[.5,1,.8,1.3,.8],f:[.5,1.1,1,1.5,1.1]},sub:{l:[.3,.6,.6,1,.3],f:[.3,.8,.8,1.2,.4]}};
@@ -218,17 +228,26 @@ const nowPart=()=>{const h=new Date().getHours();return h>=7&&h<11?0:h>=11&&h<15
 function zoneRanks(dw,pi,L){L=L||ZN;const v=L.map(z=>({z,v:dem(z,dw,pi)})).sort((a,b)=>b.v-a.v),mx=v[0]?v[0].v:1;return v.map((o,i)=>({...o,idx:Math.round(o.v/mx*100),rank:i+1}))}
 const dp=d=>DNL[d]+(d>=5?'s':'');
 const lvl=i=>i>=80?'Muy alta':i>=60?'Alta':i>=40?'Media':'Baja';
-function zoneSet(){const z=s.zona||'';if(/^Otra provincia/.test(z))return null;let L=ZN;const gi=GR.indexOf(z);if(gi>=0)L=L.filter(x=>x.g==gi);if(s.veh=='Bicicleta'){const b=L.filter(x=>x.bi);if(b.length)L=b}return L}
+/*zoneSet: ver abajo*/
 /* Apps: PRIOR inicial por franja (valores de referencia, NO medidos). Se ajusta con tus datos cuando marcás de qué app es cada ingreso. */
 const APPP={Rappi:[.9,1,.9,1.05,1],PedidosYa:[.85,1.1,.9,1.1,.8],Uber:[1.1,.9,1,1,1.1],DiDi:[1.05,.9,1,1,1.05],Cabify:[1.15,.85,1,.95,.9]},APPT={Rappi:'rep',PedidosYa:'rep',Uber:'con',DiDi:'con',Cabify:'con'};
 const nrm=t=>String(t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 function appRec(pi1,pi2){const L=(s.apps||[]).filter(a=>APPP[a]&&(s.work=='Ambos'||APPT[a]==wkey()));if(!L.length)return{none:1,has:(s.apps||[]).length};
+ /* 1) Jornadas con una sola app: ingreso por hora de esa app (la señal más fuerte) */
+ const sd={};s.shifts.forEach(x=>{if(x.apps&&x.apps.length){const k=String(x.d).slice(0,10);(sd[k]=sd[k]||{a:new Set(),m:0});x.apps.forEach(a=>sd[k].a.add(a));sd[k].m+=x.min}});
+ const ph={};L.forEach(a=>ph[a]={h:0,i:0,d:0});
+ Object.entries(sd).forEach(([k,o])=>{if(o.a.size!=1)return;const a=[...o.a][0];if(!ph[a])return;const inc=day(new Date(k+'T12:00')).filter(x=>x.t=='inc').reduce((t,x)=>t+x.a,0);if(inc>0&&o.m>=60){ph[a].h+=o.m/60;ph[a].i+=inc;ph[a].d++}});
+ const hv=L.filter(a=>ph[a].d>=2&&ph[a].h>=4),hm=hv.length?hv.reduce((t,a)=>t+ph[a].i/ph[a].h,0)/hv.length:0;
+ /* 2) Si no alcanza: ingresos con el nombre de la app en la nota (ingreso por día) */
  const ob={};L.forEach(a=>ob[a]={d:new Set(),t:0});
  s.ent.filter(e=>e.t=='inc'&&e.n).forEach(e=>L.forEach(a=>{if(nrm(e.n).includes(nrm(a))){ob[a].d.add(e.d);ob[a].t+=e.a}}));
- const have=L.filter(a=>ob[a].d.size>=2),mean=have.length?have.reduce((t,a)=>t+ob[a].t/ob[a].d.size,0)/have.length:0;
- const adj=a=>{if(have.length<2||!have.includes(a))return 1;const n=ob[a].d.size,r=(ob[a].t/n)/mean;return Math.max(.6,Math.min(1.6,1+(r-1)*n/(n+3)))};
+ const nv=L.filter(a=>ob[a].d.size>=2),nm=nv.length?nv.reduce((t,a)=>t+ob[a].t/ob[a].d.size,0)/nv.length:0;
+ const src=hv.length>=2?'jor':nv.length>=2?'nota':'ini';
+ const adj=a=>{let n,r;if(src=='jor'){if(!hv.includes(a))return 1;n=ph[a].d;r=(ph[a].i/ph[a].h)/hm}else if(src=='nota'){if(!nv.includes(a))return 1;n=ob[a].d.size;r=(ob[a].t/n)/nm}else return 1;return Math.max(.6,Math.min(1.6,1+(r-1)*n/(n+3)))};
  const pick=pi=>{const v=L.map(a=>({a,v:APPP[a][pi]*adj(a)})).sort((x,y)=>y.v-x.v);return{pi,a:v[0].a,alt:v[1]?v[1].a:null}};
- return{L,own:have.length>=2,r:[pick(pi1),...(pi2!=null?[pick(pi2)]:[])]}}
+ return{L,own:src!='ini',src,r:[pick(pi1),...(pi2!=null?[pick(pi2)]:[])]}}
+const zg=()=>[...new Set(zl(s.zona).map(q=>GR.indexOf(q)).filter(i=>i>=0))];
+function zoneSet(){const g=zg();let L=ZN;if(g.length)L=L.filter(x=>g.includes(x.g));else if(zl(s.zona).some(q=>/^Otra provincia/.test(q)))return null;if(s.veh=='Bicicleta'){const b=L.filter(x=>x.bi);if(b.length)L=b}return L}
 const fmtK=v=>{const a=Math.abs(v),g=v<0?'-':'';return a>=1e6?g+'$'+(a/1e6).toFixed(a>=1e7?0:1).replace('.',',')+' M':a>=1e3?g+'$'+Math.round(a/1e3)+'k':g+'$'+Math.round(a)};
 const niceStep=r=>{const p=Math.pow(10,Math.floor(Math.log10(r||1))),f=r/p;return(f<=1?1:f<=2?2:f<=5?5:10)*p};
 function rng(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
@@ -285,11 +304,43 @@ function copRec(M){const meta=s.meta||0,wf=M.fm*7/30,tgt=meta+wf,ord=[0,1,2,3,4,
  return{apps:appRec(pi1,pi2),D,k,h,mode,pl,cw,kU,best:ord[0],worst:ord[6],zs,pi1,pi2,gain:gain(h),reach:!meta||pl>=meta-1,hn:tgt/(M.mu0/M.hT),pwP:[0,1,2,3,4,5,6].map(d=>D.includes(d)?1:0),muP:M.mu.map(v=>v*gain(h))}}
 let copC={k:'',v:null};
 function copGet(){const M=copModel();if(!M.ok)return M;
- const sig=[s.ent.length,(s.apps||[]).join(),M.n,M.days,Math.round(M.mu0),Math.round(M.fm),s.meta,s.work,s.veh,s.zona,Math.round(M.hT*10),M.nd.join('')].join('|');
+ const sig=[s.shifts.filter(x=>x.apps&&x.apps.length).length,s.ent.length,(s.apps||[]).join(),M.n,M.days,Math.round(M.mu0),Math.round(M.fm),s.meta,s.work,s.veh,s.zona,Math.round(M.hT*10),M.nd.join('')].join('|');
  if(copC.k==sig)return copC.v;
  let hh=7;for(const c of sig)hh=(Math.imul(hh,31)+c.charCodeAt(0))|0;
  const rec=copRec(M),base=simulate(M.pw,M.mu,M,hh,1),plan=simulate(rec.pwP,rec.muP,M,hh,rec.gain),v={...M,rec,base,plan};copC={k:sig,v};return v}
-const BULB='<svg viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>';
+const BULB0='<svg viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>';
+/* ---------- Tracker de recorrido (mientras trabajás) ---------- */
+const trkPref=()=>LS.get('trkpref')!==0;
+let TW=null,TRL=null;
+const hav=(a,b)=>{const r=x=>x*Math.PI/180,dl=r(b.la-a.la),dn=r(b.ln-a.ln),h=Math.sin(dl/2)**2+Math.cos(r(a.la))*Math.cos(r(b.la))*Math.sin(dn/2)**2;return 12742*Math.asin(Math.sqrt(h))};
+function trkStart(){if(TW!=null||!navigator.geolocation||!trkPref())return;
+ TW=navigator.geolocation.watchPosition(p=>{if(p.coords.accuracy>80)return;const pt={t:Date.now(),la:+p.coords.latitude.toFixed(5),ln:+p.coords.longitude.toFixed(5)},c=LS.get('trkcur')||[],l=c[c.length-1];
+  if(l&&hav(l,pt)<.04&&pt.t-l.t<6e4)return;c.push(pt);if(c.length>4000)c.shift();LS.set('trkcur',c);if(s.scr=='app'&&s.tab=='map'&&s.mmode=='trk'){drawTrack();const e=$('#trkn');if(e)e.textContent=c.length}},()=>{},{enableHighAccuracy:true,maximumAge:10000,timeout:30000})}
+function trkStop(){if(TW!=null){navigator.geolocation.clearWatch(TW);TW=null}const c=LS.get('trkcur')||[];LS.set('trkcur',[]);return c}
+function trkSummary(c,ini,fin){let km=0;for(let i=1;i<c.length;i++){const d=hav(c[i-1],c[i]);if(d<5)km+=d}
+ const zm={};c.forEach((p,i)=>{const dt=Math.min(10,((c[i+1]?c[i+1].t:fin)-p.t)/6e4);let b=null,bd=1e9;ZN.forEach(z=>{const d=hav(p,{la:z.la,ln:z.ln})*1000;if(d<z.r*1.3&&d<bd){bd=d;b=z}});if(b)zm[b.id]=(zm[b.id]||0)+dt});
+ const k=Math.max(1,Math.ceil(c.length/300));return{id:ini,ini,fin,km:Math.round(km*10)/10,zm,pts:c.filter((_,i)=>i%k==0)}}
+function trkCard(){const cur=LS.get('trkcur')||[],T=LS.get('trks')||[],wk=T.filter(t=>Date.now()-t.ini<7*864e5),km=wk.reduce((a,t)=>a+t.km,0),zm={};
+ wk.forEach(t=>Object.entries(t.zm||{}).forEach(([k,v])=>zm[k]=(zm[k]||0)+v));
+ const top=Object.entries(zm).sort((a,b)=>b[1]-a[1]).slice(0,4).map(([k,v])=>[ZN.find(z=>z.id==k),v]).filter(x=>x[0]),live=s.since&&trkPref();
+ return `<div class="card w"><b>${live?'📍 Grabando tu recorrido':'Tu recorrido'}</b>${live?`<p><span id="trkn">${cur.length}</span> puntos guardados en esta jornada. Mantené la app abierta mientras trabajás.</p>`:''}
+${wk.length?`<div class="row" style="margin-top:8px"><span class="tag">${wk.length} jornada${wk.length>1?'s':''} · últimos 7 días</span><span class="tag">${String(Math.round(km*10)/10).replace('.',',')} km</span></div>${top.length?`<p style="margin:10px 0 2px"><b style="color:var(--tx)">Zonas donde más trabajaste</b></p>${top.map(([z,v])=>`<div class="zrow" style="cursor:default"><div>${esc(z.n)}</div><span class="mu">${Math.round(v)} min</span></div>`).join('')}`:''}`:`<p>${live?'':'Todavía no tenés recorridos guardados. '}Al tocar “Empecé a trabajar” podés activar “Guardar mi recorrido”. Acá vas a ver por dónde te moviste, cuántos km hiciste y en qué zonas pasaste más tiempo.</p>`}
+<p class="mu" style="margin-top:8px">Solo graba mientras trabajás. La ruta queda en tu celular y solo enviamos los km y las zonas. Si bloqueás la pantalla, el celular puede pausar la grabación.</p></div>`}
+function drawTrack(){if(!MAP)return;if(!TRL)TRL=L.layerGroup().addTo(MAP);TRL.clearLayers();if(s.mmode!='trk')return;
+ const cur=LS.get('trkcur')||[],T=LS.get('trks')||[],pts=(s.since&&cur.length)?cur:(T.length?T[T.length-1].pts:[]);if(!pts.length)return;
+ const ll=pts.map(p=>[p.la,p.ln]);L.polyline(ll,{color:'#2563eb',weight:4,opacity:.85}).addTo(TRL);
+ L.circleMarker(ll[0],{radius:7,color:'#fff',weight:2,fillColor:'#12b271',fillOpacity:1}).addTo(TRL);L.circleMarker(ll[ll.length-1],{radius:7,color:'#fff',weight:2,fillColor:'#2563eb',fillOpacity:1}).addTo(TRL);
+ if(s.tfit){MAP.fitBounds(L.latLngBounds(ll).pad(.3),{maxZoom:15,animate:false});s.tfit=0}}
+/* ---------- Actividad: agrupa lo que es igual ---------- */
+function actList(it){const G=[];it.forEach(x=>{const k=x.t+'|'+x.c;let g=G.find(y=>y.k==k);if(!g){g={k,t:x.t,c:x.c,ic:x.ic,a:0,items:[]};G.push(g)}g.a+=x.a;g.items.push(x);if(!g.ic&&x.ic)g.ic=x.ic});
+ G.sort((a,b)=>(a.t==b.t?0:a.t=='inc'?-1:1)||b.a-a.a);
+ const icon=g=>g.ic||[...INC,...EXP,...s.newCats.inc,...s.newCats.exp].find(c=>c[1]==g.c)?.[0]||'💬',sg=g=>g.t=='inc'?'+':'-',cl=g=>g.t=='inc'?'pos':'neg',
+ dt=x=>{const e=s.ent.find(y=>y.id==x.id);return e&&e.d?String(e.d).slice(8,10)+'/'+String(e.d).slice(5,7):''};
+ return G.map(g=>{if(g.items.length==1){const x=g.items[0];return `<div class="li"${x.id?` data-a="ed:${x.id}" style="cursor:pointer"`:''}><div class="ic">${icon(g)}</div><div>${esc(x.c)}${x.n?`<div class="mu">${esc(x.n)}</div>`:''}</div><span class="${cl(g)}">${sg(g)}${fmt(x.a)}</span>${x.id?'<span class="mu">›</span>':''}</div>`}
+  const k=encodeURIComponent(g.k),op=s.ag&&s.ag[k];
+  return `<div class="li" data-a="ag:${k}" style="cursor:pointer"><div class="ic">${icon(g)}</div><div>${esc(g.c)}<div class="mu">${g.items.length} movimientos</div></div><span class="${cl(g)}">${sg(g)}${fmt(g.a)}</span><span class="mu">${op?'⌄':'›'}</span></div>`+(op?g.items.map(x=>`<div class="li sub"${x.id?` data-a="ed:${x.id}" style="cursor:pointer"`:''}><div>${dt(x)||'·'}${x.n?' · '+esc(x.n):''}</div><span class="${cl(g)}">${sg(g)}${fmt(x.a)}</span>${x.id?'<span class="mu">›</span>':''}</div>`).join(''):'')}).join('')}
+
+const BULB='<span class="sil"></span>';
 const bars2=(v,l,hi)=>{const mx=Math.max(1,...v.map(Math.abs));return `<div class="bars">${v.map((x,i)=>`<div><em>${x>=1000?(x/1000).toFixed(1)+'k':Math.round(x)}</em><b class="${hi.includes(i)?'':'dim'}" style="height:${Math.max(0,x)/mx*78}%"></b>${l[i]}</div>`).join('')}</div>`};
 function pjChart(M,H){const W=340,Hh=190,pl=46,pr=10,pt=10,pb=24,B=M.base,P=M.plan,meta=s.meta||0,gl=t=>meta/7*t;let hi=0,lo=0;
  for(let t=0;t<=H;t++){hi=Math.max(hi,B.p90[t],P.p90[t],meta?gl(t):0);lo=Math.min(lo,B.p10[t],P.p10[t])}
@@ -326,25 +377,25 @@ function mapInit(){if(MAP)return;mapWrap=document.createElement('div');mapWrap.c
  MAP.on('zoomend',()=>mapEl.classList.toggle('lowz',MAP.getZoom()<12));mapEl.classList.toggle('lowz',MAP.getZoom()<12);
  try{matchMedia('(prefers-color-scheme:dark)').addEventListener('change',setTiles)}catch(e){}}
 const ramp=i=>`hsl(${Math.round(35+115*i/100)},70%,42%)`;
-function drawZones(){if(!MAP)return;ZL.clearLayers();const dw=s.mapDow==null?WK(today):s.mapDow,pi=s.mapPart==null?nowPart():s.mapPart;
+function drawZones(){if(!MAP)return;ZL.clearLayers();if(s.mmode=='trk')return;const dw=s.mapDow==null?WK(today):s.mapDow,pi=s.mapPart==null?nowPart():s.mapPart;
  zoneRanks(dw,pi).forEach(o=>{const z=o.z,c=ramp(o.idx),on=s.mz==z.id,ci=L.circle([z.la,z.ln],{radius:z.r,color:on?'#233351':c,weight:on?3:1.5,fillColor:c,fillOpacity:.18+.4*o.idx/100}).addTo(ZL);
   ci.bindTooltip((o.rank<=3?'<b>'+o.rank+'</b>':'')+z.n,{permanent:true,direction:'center',className:'zl'+(o.rank<=3?' top':'')});ci.on('click',()=>{s.mz=z.id;render()})});
  if(s.mzf&&s.mz){const z=ZN.find(x=>x.id==s.mz);if(z)MAP.flyTo([z.la,z.ln],Math.max(MAP.getZoom(),12),{duration:.6});s.mzf=0}}
 function mapSync(){if(!$('#mapHost'))return;
- leaf().then(()=>{const h=$('#mapHost');if(!h||s.tab!='map')return;mapInit();if(mapWrap.parentNode!==h)h.appendChild(mapWrap);MAP.invalidateSize({animate:false,pan:false});if(!MAP._fit){{const V=[[-34.60,-58.44,12],[-34.52,-58.50,11],[-34.66,-58.62,11],[-34.72,-58.38,11]][GR.indexOf(s.zona)];if(V)MAP.setView([V[0],V[1]],V[2],{animate:false});else MAP.fitBounds([[-34.84,-58.76],[-34.42,-58.24]],{animate:false})}MAP._fit=1}drawZones()})
+ leaf().then(()=>{const h=$('#mapHost');if(!h||s.tab!='map')return;mapInit();if(mapWrap.parentNode!==h)h.appendChild(mapWrap);MAP.invalidateSize({animate:false,pan:false});if(!MAP._fit){{const V=[[-34.60,-58.44,12],[-34.52,-58.50,11],[-34.66,-58.62,11],[-34.72,-58.38,11]][zg().length==1?zg()[0]:-1];if(V)MAP.setView([V[0],V[1]],V[2],{animate:false});else MAP.fitBounds([[-34.84,-58.76],[-34.42,-58.24]],{animate:false})}MAP._fit=1}drawZones();drawTrack()})
  .catch(()=>{const h=$('#mapHost');if(h)h.innerHTML='<div class="card w" style="text-align:center"><b>No pudimos cargar el mapa</b><p>Revisá tu conexión y volvé a entrar a esta pestaña.</p></div>'})}
 
 function appRow(R){const A=R.apps,ic='<div class="ic">📱</div>';
  if(A.none)return `<div class="rr">${ic}<div><b>App</b><div class="mu">${A.has?'Todavía no tenemos datos de tus apps.':'Elegí con qué apps trabajás en tu perfil y te digo cuál conviene.'}</div></div></div>`;
  if(A.L.length==1)return `<div class="rr">${ic}<div><b>Seguí con ${esc(A.L[0])}</b><div class="mu">Con una sola app no hay con qué comparar: sumar otra podría darte más pedidos o viajes en las franjas flojas.</div></div></div>`;
  const same=A.r.every(x=>x.a==A.r[0].a),tit=same?`${esc(A.r[0].a)} en ${A.r.map(x=>PARTS[x.pi][0].toLowerCase()).join(' y ')}`:A.r.map(x=>`${PARTS[x.pi][0]}: ${esc(x.a)}`).join(' · ');
- return `<div class="rr">${ic}<div><b>${tit}</b><div class="mu">${A.own?'Según lo que cargaste de cada app.':'Estimación inicial por franja. Marcá de qué app es cada ingreso al cargarlo y se ajusta a tus datos.'}</div></div></div>`}
+ return `<div class="rr">${ic}<div><b>${tit}</b><div class="mu">${A.src=='jor'?'Según tus jornadas: cuánto ganás por hora con cada app.':A.src=='nota'?'Según los ingresos en los que marcaste la app.':'Estimación inicial por franja. Elegí la app al empezar cada jornada y se ajusta a tus datos.'}</div></div></div>`}
 /* ---------- pantallas ---------- */
 const V={
 welcome:()=>`<div class="scr" style="display:flex;flex-direction:column;justify-content:center;text-align:center"><div style="margin-bottom:14px">${logo(56)}</div>${mas('hello',170)}<h1 style="margin-top:12px">¡Hola! Bienvenid@ ;)</h1><p>Tu trabajo, más cerca</p><button class="btn" data-a="go:register">Registrarse</button><button class="btn s" data-a="go:login">Iniciar sesión</button></div>`,
 login:()=>`<div class="scr"><button class="back" data-a="go:welcome">← Volver</button><h1>Iniciar sesión</h1><label>Teléfono</label><input id="u" type="tel" inputmode="tel" autocomplete="tel"><label>Tu código de invitación</label><input id="p" autocapitalize="characters"><p id="er" style="color:#ef4444">${s.err||''}</p><button class="btn" data-a="login">Entrar</button><p style="text-align:center">¿Perdiste tu código? Pedíselo al equipo de CoPi.</p></div>`,
 forgot:()=>`<div class="scr"><button class="back" data-a="go:login">← Volver</button><h1>Recuperar contraseña</h1><p>Ingresá tu número o correo y te mandamos un enlace.</p><label>Número o correo</label><input><button class="btn" data-a="forgot">Enviar enlace</button></div>`,
-register:()=>`<div class="scr"><button class="back" data-a="go:welcome">← Volver</button><h1>Registrate</h1><label>Código de invitación</label><input id="rc" autocapitalize="characters" placeholder="PILOTO-001"><label>Nombre</label><input id="rn"><label>Correo</label><input id="re" type="email" inputmode="email"><label>N° de teléfono</label><input id="rt" type="tel" inputmode="tel"><label>Sobre tu trabajo</label><div class="chips">${['Repartidor','Conductor','Ambos'].map(w=>`<button class="chip ${s.work==w?'on':''}" data-a="work:${w}">${w}</button>`).join('')}</div><label>¿Qué vehículo usás?</label><div class="chips">${['Moto','Bicicleta','Auto','Otro'].map(v=>`<button class="chip ${s.veh==v?'on':''}" data-a="veh:${v}">${v}</button>`).join('')}</div><label>¿Con qué apps trabajás?</label><div class="chips">${ALL.map(a=>`<button class="chip ${s.apps.includes(a)?'on':''}" data-a="app:${a}">${a}</button>`).join('')}</div><label>¿En qué zona trabajás?</label><div class="chips">${ZONAS.map(z=>`<button class="chip ${s.zona==z?'on':''}" data-a="zona:${z}">${z}</button>`).join('')}</div>${s.zona=='Otra provincia'?'<input id="rzo" placeholder="¿Cuál?" style="margin-top:8px">':''}
+register:()=>`<div class="scr"><button class="back" data-a="go:welcome">← Volver</button><h1>Registrate</h1><label>Código de invitación</label><input id="rc" autocapitalize="characters" placeholder="PILOTO-001"><label>Nombre</label><input id="rn"><label>Correo</label><input id="re" type="email" inputmode="email"><label>N° de teléfono</label><input id="rt" type="tel" inputmode="tel"><label>Sobre tu trabajo</label><div class="chips">${['Repartidor','Conductor','Ambos'].map(w=>`<button class="chip ${s.work==w?'on':''}" data-a="work:${w}">${w}</button>`).join('')}</div><label>¿Qué vehículo usás?</label><div class="chips">${['Moto','Bicicleta','Auto','Otro'].map(v=>`<button class="chip ${s.veh==v?'on':''}" data-a="veh:${v}">${v}</button>`).join('')}</div><label>¿Con qué apps trabajás?</label><div class="chips">${ALL.map(a=>`<button class="chip ${s.apps.includes(a)?'on':''}" data-a="app:${a}">${a}</button>`).join('')}</div><label>¿En qué zonas trabajás? <span class="mu">(podés elegir más de una)</span></label><div class="chips">${ZONAS.map(z=>`<button class="chip ${zl(s.zona).includes(z)?'on':''}" data-a="zona:${z}">${z}</button>`).join('')}</div>${zl(s.zona).includes('Otra provincia')?'<input id="rzo" placeholder="¿Cuál?" style="margin-top:8px">':''}
 <label class="ck"><input id="rk" type="checkbox"><span>Acepto los <a href="#" data-a="go:tyc">Términos y condiciones</a> y la <a href="#" data-a="go:priv">Política de privacidad</a>.</span></label>
 <label class="ck"><input id="rk2" type="checkbox"><span>Acepto (opcional) que CoPi use mis datos de forma agregada y anónima para estudios del sector.</span></label>
 <p id="er" style="color:#ef4444">${s.err||''}</p><button class="btn" data-a="reg">Crear cuenta</button></div>`,
@@ -367,42 +418,42 @@ act:()=>{const p=period(),r=s.range,mo=['Este mes','Mes anterior','Hace 2 meses'
  ${r=='day'?`<div class="chips" style="margin-bottom:10px">${DN.map((d,i)=>`<button class="chip ${s.day==i?'on':''}" data-a="dy:${i}">${d}</button>`).join('')}</div>`:''}
  ${r=='month'?`<div class="chips" style="margin-bottom:10px">${mo.map((d,i)=>`<button class="chip ${s.mo==i?'on':''}" data-a="mo:${i}">${d}</button>`).join('')}</div>`:''}
  <div class="card"><div class="row mu"><span>Ingresos <b class="pos">${fmt(p.i)}</b></span><span>Gastos <b class="neg">${fmt(p.e)}</b></span></div><div class="mu" style="margin-top:6px">Neto</div><div class="big" style="${p.n<0?'color:#ef4444':''}">${fmt(p.n)}</div></div>
- ${p.bars?`<div class="card w">${bars(p.bars,p.labels)}</div>`:''}<h2>Movimientos</h2>${p.it.map(x=>`<div class="li"${x.id?` data-a="ed:${x.id}" style="cursor:pointer"`:''}><div class="ic">${x.ic||[...INC,...EXP,...s.newCats.inc,...s.newCats.exp].find(c=>c[1]==x.c)?.[0]||'💬'}</div><div>${esc(x.c)}${x.n?`<div class="mu">${esc(x.n)}</div>`:''}</div><span class="${x.t=='inc'?'pos':'neg'}">${x.t=='inc'?'+':'-'}${fmt(x.a)}</span>${x.id?'<span class="mu">›</span>':''}</div>`).join('')}</div>`},
-cop:()=>{const M=copGet(),head=`<div class="row" style="margin-bottom:10px"><div><h1>Copiloto</h1><p>Tu proyección y qué te conviene hacer.</p></div><div class="bulbic">${BULB}</div></div>`;
+ ${p.bars?`<div class="card w">${bars(p.bars,p.labels)}</div>`:''}<h2>Movimientos</h2>${actList(p.it)}</div>`},
+cop:()=>{const M=copGet(),head=`<div class="row" style="margin-bottom:6px"><h1>Copiloto</h1><div class="cpic">${BULB}</div></div><p style="margin:0 0 12px">Tu asistente para decidir mejor: te muestra cuánto vas a ganar si seguís igual y qué te conviene cambiar para llegar más lejos.</p>`;
  if(!M.ok)return `<div class="scr">${head}<div class="card" style="text-align:center">${mas('hello',120)}<b>Estoy conociendo tu ritmo</b><p>Para proyectar y recomendarte necesito al menos una semana tuya, con ingresos cargados en 3 días o más.</p><div class="bar"><i style="width:${Math.min(100,Math.round(M.days/7*100))}%"></i></div><div class="mu">${Math.min(M.days,7)} de 7 días · ${M.worked} con ingresos</div><button class="btn" data-a="m:doc">Cargar un ingreso</button></div></div>`;
- const R=M.rec,H=s.cph||30,B=M.base,P=M.plan,meta=s.meta||0,lb={14:'2 semanas',30:'1 mes',91:'3 meses'}[H],dl=P.p50[H]-B.p50[H],avg=M.mu.reduce((a,b)=>a+b,0)/7,up=Math.round((M.mu[R.best]/avg-1)*100),dn=Math.round((1-M.mu[R.worst]/avg)*100);
+ const R=M.rec,H=s.cph||30,B=M.base,P=M.plan,meta=s.meta||0,lb={14:'2 semanas',30:'1 mes',91:'3 meses'}[H],dl=P.p50[H]-B.p50[H],avg=M.mu.reduce((a,b)=>a+b,0)/7,up=Math.round((M.mu[R.best]/avg-1)*100),dn=Math.round((1-M.mu[R.worst]/avg)*100),hT=String(Math.round(M.hT*10)/10).replace('.',','),pc=x=>Math.round(x*100);
  const ins=[];if(up>=5)ins.push(`Los <b>${dp(R.best)}</b> son tu mejor día: rinden un ${up}% más que tu promedio.`);else ins.push('Tus días rinden parecido entre sí: lo que más suma es la cantidad de horas.');
  if(dn>=8)ins.push(`Los <b>${dp(R.worst)}</b> son los más flojos (${dn}% menos que tu promedio): ideales para descansar.`);
- ins.push(`Tu neto ronda <b>${fmt(M.mu0/M.hT)}</b> por hora${M.real?'':' (estimado con una jornada típica de '+String(M.hT).replace('.',',')+' h; cargá tus jornadas para afinarlo)'}.`);
+ ins.push(`Tu neto ronda <b>${fmt(M.mu0/M.hT)}</b> por hora.`);
  if(M.nb>=4&&Math.abs(M.g)>=.005)ins.push(`Tus últimas semanas vienen ${M.g>0?'subiendo':'bajando'} ~${Math.round(Math.abs(M.g)*100)}% por semana (lo tenemos en cuenta, pero amortiguado).`);
  const hs=String(R.h).replace('.',','),mc={meta:`Para llegar a tu meta de ${fmt(meta)} por semana`,mejor:'Ya venís cumpliendo tu meta: el mismo esfuerzo, pero en tus mejores días',libre:'Para sacarle más a tu semana'}[R.mode];
  return `<div class="scr">${head}
-<div class="card w"><b>Si seguís trabajando así…</b>
+<div class="card w"><b>1 · Si seguís igual</b><p style="margin:2px 0 0">Si no cambiás nada de cómo trabajás hoy.</p>
 <div class="seg" style="margin:10px 0 8px">${[[14,'2 semanas'],[30,'1 mes'],[91,'3 meses']].map(([k,l])=>`<button class="${H==k?'on':''}" data-a="cph:${k}">${l}</button>`).join('')}</div>
-<div class="mu">En ${lb} vas a llegar a unos</div><div class="big" style="${B.p50[H]<0?'color:#ef4444':''}">${fmt(B.p50[H])}</div><div class="mu">de ganancia neta · en pesos de hoy</div>
-<div id="pjt" class="mu" style="margin:8px 0 2px;min-height:15px">8 de cada 10 escenarios caen entre <b style="color:var(--tx)">${fmtK(B.p10[H])}</b> y <b style="color:var(--tx)">${fmtK(B.p90[H])}</b>. Deslizá el dedo por el gráfico.</div>
+<div class="mu">En ${lb} vas a llegar a unos</div><div class="big" style="${B.p50[H]<0?'color:#ef4444':''}">${fmt(B.p50[H])}</div><div class="mu">de ganancia neta, en pesos de hoy</div>
+<div id="pjt" class="mu" style="margin:8px 0 2px;min-height:15px">Rango probable: <b style="color:var(--tx)">${fmtK(B.p10[H])}</b> a <b style="color:var(--tx)">${fmtK(B.p90[H])}</b> · deslizá el dedo por el gráfico</div>
 ${pjChart(M,H)}
-<div class="lg"><span><i style="border-color:var(--g2)"></i>Si seguís así</span><span><i class="bd"></i>Rango probable</span>${meta?'<span><i style="border-color:var(--mu);border-top-style:dotted"></i>Tu meta</span>':''}<span><i style="border-color:#f59e0b;border-top-style:dashed"></i>Plan Copiloto</span></div>
-${meta?`<div class="row" style="margin-top:12px;align-items:flex-start"><span>🎯 <b>${Math.round(B.pr[H]*100)}%</b> de chances de sostener tu meta de ${fmt(meta)} por semana durante ${lb}</span></div>`:`<button class="btn sm" data-a="meditor" style="margin-top:12px">Definir mi meta semanal</button>`}
-${M.fm>0?`<div class="mu" style="margin-top:8px">🧾 Ya descontamos tus gastos fijos (${fmt(M.fm)} por mes).</div>`:`<div class="mu" style="margin-top:8px">🧾 No cargaste gastos fijos, así que la proyección puede estar algo alta. <button class="lnk" style="width:auto;padding:0;font-size:12px" data-a="go:fixed">Cargarlos</button></div>`}</div>
-<div class="amb"><b class="pl">💡 Con el plan del Copiloto</b><div class="big" style="font-size:28px;margin-top:4px">${fmt(P.p50[H])}</div><p>${dl>=0?'+':'−'}${fmt(Math.abs(dl))} respecto de seguir igual, en ${lb}.${dl<0?' Pero con menos días de trabajo.':''}</p></div>
-<h2>Te conviene</h2><div class="card w"><p style="margin:0 0 4px">${mc}:</p>
+<div class="lg"><span><i style="border-color:var(--g2)"></i>Si seguís igual</span><span><i class="bd"></i>Rango probable</span>${meta?'<span><i style="border-color:var(--mu);border-top-style:dotted"></i>Tu meta</span>':''}<span><i style="border-color:#f59e0b;border-top-style:dashed"></i>Con el plan (paso 2)</span></div>
+${meta?`<p style="margin:14px 0 0">🎯 <b style="color:var(--tx)">Chances de llegar a tu meta</b> de ${fmt(meta)} por semana (en promedio, durante ${lb}):</p><div class="ch2"><div><b>${pc(B.pr[H])}%</b><div class="mu">si seguís igual</div></div><span class="ar">→</span><div><b style="color:var(--g2)">${pc(P.pr[H])}%</b><div class="mu">si seguís el plan del paso 2</div></div></div>`:`<button class="btn sm" data-a="meditor" style="margin-top:12px">Definir mi meta semanal</button>`}
+${M.fm>0?'':`<div class="mu" style="margin-top:8px">🧾 No cargaste gastos fijos, así que la proyección puede estar algo alta. <button class="lnk" style="width:auto;padding:0;font-size:12px" data-a="go:fixed">Cargarlos</button></div>`}</div>
+<div class="card w"><b>2 · Qué te conviene cambiar</b><p style="margin:2px 0 4px">${mc}:</p>
 <div class="rr"><div class="ic">📅</div><div><b>Trabajar ${R.D.map(d=>DNL[d].slice(0,3)).join(' · ')}</b><div class="mu">${R.k} días por semana (hoy trabajás ~${String(Math.round(R.kU*10)/10).replace('.',',')})</div></div></div>
-<div class="rr"><div class="ic">⏱️</div><div><b>${hs} h por día</b><div class="mu">${String(Math.round(R.k*R.h*10)/10).replace('.',',')} h por semana${R.pi2!=null?'':''}</div></div></div>
+<div class="rr"><div class="ic">⏱️</div><div><b>${hs} h por día</b><div class="mu">${String(Math.round(R.k*R.h*10)/10).replace('.',',')} h por semana. ${M.real?`Tu jornada típica es de ${hT} h (de tus jornadas cargadas).`:`Jornada típica estimada en ${hT} h: promedio de la encuesta de CoPi. Cargá tus jornadas para afinarlo.`}</div></div></div>
 ${R.zs?`<div class="rr"><div class="ic">📍</div><div><b>${R.zs.map(z=>esc(z.n)).join(', ')}</b><div class="mu">Franja fuerte: ${PARTS[R.pi1][1]} h (${PARTS[R.pi1][0].toLowerCase()})${R.pi2!=null?' · segunda: '+PARTS[R.pi2][1]+' h':''}</div></div></div>`:`<div class="rr"><div class="ic">📍</div><div><b>Zona</b><div class="mu">Por ahora solo cubrimos el AMBA.</div></div></div>`}
 ${appRow(R)}
-<p style="margin:8px 0 0">Con esto estimamos <b style="color:var(--tx)">${fmt(R.pl)}</b> netos por semana, contra <b style="color:var(--tx)">${fmt(R.cw)}</b> si seguís igual${meta?' (tu meta: '+fmt(meta)+')':''}.</p>
+<p style="margin:10px 0 0">Con este plan estimamos <b style="color:var(--tx)">${fmt(R.pl)}</b> netos por semana, contra <b style="color:var(--tx)">${fmt(R.cw)}</b> si seguís igual. En ${lb}: <b style="color:var(--g2)">${dl>=0?'+':'−'}${fmt(Math.abs(dl))}</b>${dl<0?' (con menos días de trabajo)':''}.</p>
 ${R.reach?'':`<p style="margin-top:6px;color:#b45309"><b>Ojo:</b> con tu ritmo actual, llegar a tu meta pediría unas ${Math.round(R.hn)} horas por semana. Este es el plan más sano que alcanzamos; quizá te convenga ajustar la meta a ~${fmt(Math.floor(R.pl/1000)*1000)}.</p>`}
 ${R.zs?'<button class="btn s" data-a="cmap">🗺️ Ver zonas en el mapa</button>':''}</div>
-<div class="card w"><b>Cuánto rinde cada día (por jornada)</b>${bars2(M.mu,DNS,R.D)}<div class="mu">En verde, los días del plan.</div><ul class="ins">${ins.map(t=>`<li>${t}</li>`).join('')}</ul></div>
-<div class="mu" style="margin:0 2px 10px">Confianza <b>${M.conf}</b> · se basa en ${M.n} jornadas tuyas de las últimas ${String(M.wks).replace('.',',')} semanas y en el patrón de riders parecidos. Son estimaciones, no promesas.</div>
-<button class="lnk" data-a="cophow">${s.how?'Ocultar cómo lo calculamos ▴':'¿Cómo lo calculamos? ▾'}</button>
-${s.how?`<div class="card w how"><b>Lo que hace el Copiloto por detrás</b><ol><li>Mira tus días y le da más peso a lo reciente.</li><li>Aprende cuánto rinde cada día de la semana y con qué frecuencia lo trabajás: no usa un promedio plano.</li><li>Cuando tenés pocos datos, los completa con el patrón de riders parecidos. <b>Hoy esos valores son una referencia inicial</b> que se va a reemplazar por los datos reales del piloto.</li><li>Tus gastos fijos se descuentan aparte, para que un mes de seguro no arruine un día.</li><li>Simula 1.200 semanas posibles, con días buenos, malos y de descanso, y por eso te muestra un rango en vez de un solo número.</li><li>Los montos están en pesos de hoy: no incluyen inflación.</li><li>La zona sale del patrón general de tu zona y tu vehículo, no de tus recorridos.</li></ol></div>`:''}</div>`},
-map:()=>{const dw=s.mapDow==null?WK(today):s.mapDow,pi=s.mapPart==null?nowPart():s.mapPart,rk=zoneRanks(dw,pi),sel=s.mz&&rk.find(o=>o.z.id==s.mz),mine=GR.indexOf(s.zona);
- let card;if(sel){const z=sel.z,bp=[0,1,2,3,4].sort((a,b)=>dem(z,dw,b)-dem(z,dw,a))[0];card=`<div class="card w"><div class="row"><b style="font-size:16px">${esc(z.n)}</b><button class="lnk" style="width:auto;padding:0" data-a="zsel:">✕</button></div><div class="row" style="margin-top:6px"><span class="tag">Demanda ${lvl(sel.idx).toLowerCase()} · ${sel.idx}/100</span>${z.g==mine?'<span class="tag">Tu zona</span>':''}</div><p>Mejor franja ese día: <b style="color:var(--tx)">${PARTS[bp][1]} h</b> (${PARTS[bp][0].toLowerCase()}).${z.sat>=.6?' Suele haber mucha competencia entre riders.':z.sat<=.3?' Con poca competencia entre riders.':''}</p></div>`}
- else card=`<div class="card w"><b>Mejores zonas · ${DNL[dw]}, ${PARTS[pi][0].toLowerCase()}</b>${rk.slice(0,3).map(o=>`<div class="zrow" data-a="zsel:${o.z.id}"><span class="rk">${o.rank}</span><div>${esc(o.z.n)}<div class="mu">${lvl(o.idx)} · ${o.idx}/100${o.z.g==mine?' · tu zona':''}</div></div><span class="mu">›</span></div>`).join('')}</div>`;
- return `<div class="scr"><div class="row"><h1>Mapa</h1><span class="tag">Estimación inicial</span></div><p>Dónde hay más demanda en el AMBA según el día y la franja.</p>
-<div class="hscroll" style="margin-top:10px">${DNS.map((d,i)=>`<button class="chip ${dw==i?'on':''}" data-a="mdw:${i}">${d}</button>`).join('')}</div>
+<button class="lnk" data-a="why">${s.why?'Ocultar ▴':'¿Por qué te recomendamos esto? ▾'}</button>
+${s.why?`<div class="card w"><b>Cuánto rinde cada día (por jornada)</b>${bars2(M.mu,DNS,R.D)}<div class="mu">En verde, los días del plan.</div><ul class="ins">${ins.map(t=>`<li>${t}</li>`).join('')}</ul></div>
+<div class="card w how"><b>Cómo lo calculamos</b><ol><li>Mira tus días y le da más peso a lo reciente.</li><li>Aprende cuánto rinde cada día de la semana y con qué frecuencia lo trabajás: no usa un promedio plano.</li><li>Cuando tenés pocos datos, los completa con el patrón de riders parecidos. <b>Hoy esos valores son una referencia inicial</b> que se va a reemplazar por los datos reales del piloto.</li><li>Tus gastos fijos se descuentan aparte, para que un mes de seguro no arruine un día.</li><li>Simula 1.200 semanas posibles, con días buenos, malos y de descanso: por eso te muestra un rango y no un solo número.</li><li>Las horas por jornada salen de tus jornadas cargadas; si no hay, del promedio de la encuesta de CoPi (89 riders).</li><li>La app sale de tus jornadas y de la app que marcaste al empezar; con poco dato, de un patrón inicial. La zona sale del patrón de tus zonas y tu vehículo.</li><li>Los montos están en pesos de hoy: no incluyen inflación.</li></ol><div class="mu" style="margin-top:8px">Confianza <b>${M.conf}</b>: ${M.n} jornadas tuyas en las últimas ${String(M.wks).replace('.',',')} semanas. Son estimaciones, no promesas.</div></div>`:''}</div>`},
+map:()=>{const md=s.mmode||'dem',modes=`<div class="seg" style="margin:10px 0 8px"><button class="${md=='dem'?'on':''}" data-a="mmode:dem">Dónde trabajar</button><button class="${md=='trk'?'on':''}" data-a="mmode:trk">Mi recorrido</button></div>`;
+ if(md=='trk')return `<div class="scr"><h1>Mapa</h1>${modes}<div class="mapbox" id="mapHost"></div>${trkCard()}</div>`;
+ const dw=s.mapDow==null?WK(today):s.mapDow,pi=s.mapPart==null?nowPart():s.mapPart,rk=zoneRanks(dw,pi),sel=s.mz&&rk.find(o=>o.z.id==s.mz),mine=zg();
+ let card;if(sel){const z=sel.z,bp=[0,1,2,3,4].sort((a,b)=>dem(z,dw,b)-dem(z,dw,a))[0];card=`<div class="card w"><div class="row"><b style="font-size:16px">${esc(z.n)}</b><button class="lnk" style="width:auto;padding:0" data-a="zsel:">✕</button></div><div class="row" style="margin-top:6px"><span class="tag">Demanda ${lvl(sel.idx).toLowerCase()} · ${sel.idx}/100</span>${mine.includes(z.g)?'<span class="tag">Tu zona</span>':''}</div><p>Mejor franja ese día: <b style="color:var(--tx)">${PARTS[bp][1]} h</b> (${PARTS[bp][0].toLowerCase()}).${z.sat>=.6?' Suele haber mucha competencia entre riders.':z.sat<=.3?' Con poca competencia entre riders.':''}</p></div>`}
+ else card=`<div class="card w"><b>Mejores zonas · ${DNL[dw]}, ${PARTS[pi][0].toLowerCase()}</b>${rk.slice(0,3).map(o=>`<div class="zrow" data-a="zsel:${o.z.id}"><span class="rk">${o.rank}</span><div>${esc(o.z.n)}<div class="mu">${lvl(o.idx)} · ${o.idx}/100${mine.includes(o.z.g)?' · tu zona':''}</div></div><span class="mu">›</span></div>`).join('')}</div>`;
+ return `<div class="scr"><div class="row"><h1>Mapa</h1><span class="tag">Estimación inicial</span></div>${modes}
+<div class="hscroll">${DNS.map((d,i)=>`<button class="chip ${dw==i?'on':''}" data-a="mdw:${i}">${d}</button>`).join('')}</div>
 <div class="hscroll">${PARTS.map((p,i)=>`<button class="chip ${pi==i?'on':''}" data-a="mpt:${i}">${p[0]}</button>`).join('')}</div>
 <div class="mapbox" id="mapHost"></div><div class="ramp"></div><div class="row mu" style="margin-bottom:10px"><span>Menos demanda</span><span>Más demanda</span></div>${card}
 <p class="mu" style="margin-top:4px">Los círculos son zonas aproximadas y la demanda es una estimación inicial: se va a ir afinando con los datos de los riders de CoPi.</p></div>`},
@@ -412,7 +463,7 @@ ${R('👤','Mis datos','Nombre y correo','go:p_data')}${R('🛵','Mi trabajo','T
 <div class="card w row"><div><b>Horas esta semana</b><div class="mu">${hrs()}${s.since?' (en curso)':''}</div></div><button class="btn sm ${s.since?'r':''}" data-a="clock">${s.since?'Terminé':'Empecé a trabajar'}</button></div>
 <button class="btn s" data-a="nt">🔔 Notificaciones</button><button class="btn s" data-a="go:help">❓ Ayuda</button><button class="btn s" data-a="out">Cerrar sesión</button></div>`},
 p_data:()=>`<div class="scr"><button class="back" data-a="x">← Volver</button><h1>Mis datos</h1><label>Nombre</label><input id="pn" value="${esc(s.fullname||s.name)}"><label>Correo</label><input id="pe" type="email" inputmode="email" value="${esc(s.email)}">${SES.tel?`<label>Teléfono</label><input value="${esc(SES.tel)}" disabled>`:''}<p class="mu">El teléfono es tu acceso a la cuenta. Para cambiarlo, escribinos y te ayudamos.</p><button class="lnk" data-a="go:help">Pedir cambio de teléfono</button><button class="btn" data-a="sdata">Guardar</button></div>`,
-p_work:()=>{const d=s.dr;return `<div class="scr"><button class="back" data-a="x">← Volver</button><h1>Mi trabajo</h1><label>Sobre tu trabajo</label><div class="chips">${['Repartidor','Conductor','Ambos'].map(w=>chp(d.work==w,'dw:'+w,w)).join('')}</div><label>Vehículo</label><div class="chips">${['Moto','Bicicleta','Auto','Otro'].map(v=>chp(d.veh==v,'dv:'+v,v)).join('')}</div><label>Apps con las que trabajás</label><div class="chips">${ALL.map(a=>chp(d.apps.includes(a),'da:'+a,a)).join('')}</div><label>Zona</label><div class="chips">${ZONAS.map(z=>chp(d.zona==z,'dz:'+z,z)).join('')}</div>${d.zona=='Otra provincia'?`<input id="dzo" placeholder="¿Cuál?" value="${esc(d.otra||'')}" style="margin-top:8px">`:''}<p class="mu">Si cambiás de vehículo, las categorías de gastos que te mostramos se actualizan solas.</p><button class="btn" data-a="swork">Guardar</button></div>`},
+p_work:()=>{const d=s.dr;return `<div class="scr"><button class="back" data-a="x">← Volver</button><h1>Mi trabajo</h1><label>Sobre tu trabajo</label><div class="chips">${['Repartidor','Conductor','Ambos'].map(w=>chp(d.work==w,'dw:'+w,w)).join('')}</div><label>Vehículo</label><div class="chips">${['Moto','Bicicleta','Auto','Otro'].map(v=>chp(d.veh==v,'dv:'+v,v)).join('')}</div><label>Apps con las que trabajás</label><div class="chips">${ALL.map(a=>chp(d.apps.includes(a),'da:'+a,a)).join('')}</div><label>Zonas <span class="mu">(podés elegir más de una)</span></label><div class="chips">${ZONAS.map(z=>chp(d.zonas.includes(z),'dz:'+z,z)).join('')}</div>${d.zonas.includes('Otra provincia')?`<input id="dzo" placeholder="¿Cuál?" value="${esc(d.otra||'')}" style="margin-top:8px">`:''}<p class="mu">Si cambiás de vehículo, las categorías de gastos que te mostramos se actualizan solas.</p><button class="btn" data-a="swork">Guardar</button></div>`},
 p_goal:()=>`<div class="scr"><button class="back" data-a="x">← Volver</button><h1>Mi meta</h1><label>Meta semanal ($)</label><input id="gm" type="text" inputmode="numeric" class="money" autocomplete="off" value="${fmtN(s.gm!=null?s.gm:s.meta)}"><label>¿Cuánto estimás que ganás por semana? ($)</label><input id="ge" type="text" inputmode="numeric" class="money" autocomplete="off" value="${fmtN(s.ge!=null?s.ge:s.est)}"><p class="mu">${s.est?`Sugerencia: ${fmt(sug())} (un 10% más que tu estimación).`:'Un número aproximado alcanza.'}</p><label>¿Llevás la cuenta de lo que ganás por semana?</label><div class="chips">${chp(s.obq=='si','gq:si','Sí')}${chp(s.obq=='no','gq:no','No')}</div><button class="btn" data-a="sgoal">Guardar</button></div>`,
 fixed:()=>{const pend=fxPend().length;return `<div class="scr"><button class="back" data-a="x">← Volver</button><h1>Gastos fijos de ${mname()}</h1><p>Lo que pagás una vez por mes. Si un monto cambió, corregilo: queda como base para el mes que viene. Se registra como un gasto más.</p>${FIXC.map((c,i)=>{const l=loaded(c),b=+(s.fx||{})[c]||0;return `<div class="card w"><div class="row"><b>${icOf(c)} ${c}</b>${l?`<span class="tag">✓ Cargado · ${fmt(l)}</span>`:''}</div>${l?'':`<input id="fx${i}" type="text" inputmode="numeric" class="money" autocomplete="off" placeholder="$ por mes (vacío si no lo pagás)" value="${fmtN(b)}" style="margin-top:8px">${b?`<p class="mu">Último valor: ${fmt(b)}</p>`:''}`}</div>`}).join('')}<button class="btn" data-a="fxload">Cargar los de ${mname()}</button><button class="btn s" data-a="fxsave">Solo guardar los montos</button>${pend?'<button class="lnk" data-a="fxskip">Hoy no, recordármelo después</button>':''}</div>`},
 shifts:()=>{const L=[...s.shifts].sort((a,b)=>b.ini-a.ini).slice(0,40);return `<div class="scr"><button class="back" data-a="x">← Volver</button><h1>Mis jornadas</h1><p>Si te olvidaste de tocar “Terminé”, corregí la hora o borrá la jornada.</p><button class="btn sm" data-a="shnew" style="margin:8px 0">＋ Agregar jornada</button>${L.length?L.map(x=>`<div class="li" data-a="she:${x.id}" style="cursor:pointer"><div class="ic">⏱️</div><div>${dlab(x.ini)}<div class="mu">${hm(x.ini)} a ${hm(x.fin)}</div></div><b>${Math.floor(x.min/60)} h ${x.min%60} min</b><span class="mu">›</span></div>`).join(''):'<p style="margin-top:14px">Todavía no tenés jornadas guardadas.</p>'}</div>`},
@@ -429,11 +480,12 @@ function render(){
  const nav=['home','act','cop','map','me'].includes(s.tab)&&s.scr=='app';
  let body=s.scr=='app'?V[s.tab]():V[s.scr]();
  const prev=$('.scr'),pk=s.scr+s.tab,st=prev&&s._pk==pk?prev.scrollTop:0;s._pk=pk;$('#app').innerHTML=body+(nav?`<div class="nav">${NAV.map(([k,l,i])=>`<button class="${s.tab==k?'on':''}" data-a="tab:${k}">${i}${l}</button>`).join('')}</div><button class="plus ${s.plus?'open':''}" data-a="plus" aria-label="Agregar"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>`:'')
- +(s.plus?`<div class="ov" data-a="plusx"><div class="fab"><button data-a="m:mic"><span>🎙️</span>Micrófono</button><button data-a="m:doc"><span>✍️</span>Carga manual</button></div></div>`:'')+(s.medit?`<div class="ov2" data-a="mclose"></div><div class="msheet"><b>Tu meta semanal</b><input id="mi" type="text" inputmode="numeric" class="money" autocomplete="off" placeholder="$" value="${fmtN(s.meta)}"><button class="btn" data-a="msave">Guardar</button></div>`:'')+(s.toast?`<div class="toast">${s.toast}</div>`:'');if(s.toast){const t=s.toast;setTimeout(()=>{if(s.toast==t){s.toast='';render()}},4000)}
+ +(s.plus?`<div class="ov" data-a="plusx"><div class="fab"><button data-a="m:mic"><span>🎙️</span>Micrófono</button><button data-a="m:doc"><span>✍️</span>Carga manual</button></div></div>`:'')+(s.askApp?`<div class="ov2" data-a="askx"></div><div class="msheet"><b>¿Con qué app vas a trabajar?</b><p class="mu">Elegí una o más. Así vemos cuál te rinde más.</p><div class="pick">${s.apps.map(a=>`<button class="chip ${s.pick.includes(a)?'on':''}" data-a="sp:${esc(a)}">${esc(a)}</button>`).join('')}</div><button class="chip ${trkPref()?'on':''}" data-a="strk">📍 Guardar mi recorrido ${trkPref()?'✓':''}</button><p class="mu" style="margin:6px 0 12px">Mantené la app abierta mientras trabajás. Podés apagarlo cuando quieras.</p><button class="btn" data-a="gowork" ${s.pick.length?'':'disabled'}>Empezar</button></div>`:'')+(s.medit?`<div class="ov2" data-a="mclose"></div><div class="msheet"><b>Tu meta semanal</b><input id="mi" type="text" inputmode="numeric" class="money" autocomplete="off" placeholder="$" value="${fmtN(s.meta)}"><button class="btn" data-a="msave">Guardar</button></div>`:'')+(s.toast?`<div class="toast">${s.toast}</div>`:'');if(s.toast){const t=s.toast;setTimeout(()=>{if(s.toast==t){s.toast='';render()}},4000)}
  if(s.scr=='register'&&s.rf)for(const[k,v]of Object.entries(s.rf)){const e=$('#'+k);if(e){if(e.type=='checkbox')e.checked=v;else e.value=v}}
  restoreRF();{const n2=$('.scr');if(n2)n2.scrollTop=st}
  $('#app').classList.toggle('hasnav',nav);if(nav&&s.tab=='map')mapSync()
 }
+function beginWork(ap){s.since=Date.now();s.sapps=ap;LS.set('shift',{since:s.since,apps:ap});if(ap.length)LS.set('lastapps',ap);trkStart();s.toast=ap.length?'Jornada iniciada con '+ap.join(' y '):''}
 function entry(t,c,a,d,ic,n){const L={id:'l'+Date.now(),t,c,a:+a,d:d||key(today),n:n||'',ic:ic||[...INC,...EXP,...s.newCats.inc,...s.newCats.exp].find(x=>x[1]==c)?.[0]||'💬'};
  api({action:'addEntry',userId:SES.uid,codigo:SES.code,tipo:t,categoria:c,grupo:grp(c),monto:+a,fecha:L.d,nota:L.n,origen:s.org||'manual'}).then(r=>{if(r&&r.id)L.id=r.id});s.org='';s.ent.push(L)}
 const A={
@@ -444,13 +496,13 @@ login:async()=>{if(DEMO){s.scr='app';s.tab='home';return}
  const r=await api({action:'login',telefono:t,codigo:c});if(!r.ok){err(r.error);return}
  SES={uid:r.user.id,code:c,name:r.user.nombre,tel:t};LS.set('ses',SES);s.name=r.user.nombre.split(' ')[0];s.work=r.user.trabajo||s.work;s.zona=r.user.zona||'';s.veh=r.user.vehiculo||'';s.meta=+r.user.meta_semanal||0;SES.meta=s.meta;LS.set('ses',SES);{const u=r.user;s.fullname=u.nombre;s.email=u.correo||'';if(u.apps)s.apps=Array.isArray(u.apps)?u.apps:String(u.apps).split(/\s*,\s*/).filter(Boolean);if(u.estimado)s.est=+u.estimado;if(u.cuenta)s.obq=u.cuenta;if(u.agregados!==undefined&&u.agregados!=='')s.agr=u.agregados===true||/^(si|true)$/i.test(u.agregados);try{if(u.gastos_fijos)s.fx=JSON.parse(u.gastos_fijos)}catch(e){}}applyLocal();s.err='';await load();await loadNt();await loadShifts();s.scr='app';s.tab='home'},forgot:()=>{s.scr='login'},
 work:v=>s.work=v,app:v=>{s.apps=s.apps.includes(v)?s.apps.filter(a=>a!=v):[...s.apps,v]},
-reg:async()=>{const g=i=>$(i).value.trim(),b={action:'register',nombre:g('#rn'),correo:g('#re'),telefono:g('#rt'),zona:s.zona=='Otra provincia'?'Otra provincia: '+($('#rzo')?$('#rzo').value.trim():''):s.zona,tyc:'v0-borrador',agregados:$('#rk2').checked,codigo:g('#rc'),trabajo:s.work,vehiculo:s.veh||'',apps:s.apps,consentimiento:$('#rk').checked};
+reg:async()=>{const g=i=>$(i).value.trim(),b={action:'register',nombre:g('#rn'),correo:g('#re'),telefono:g('#rt'),zona:zl(s.zona).map(q=>q=='Otra provincia'?'Otra provincia: '+($('#rzo')?$('#rzo').value.trim().replace(/,/g,' '):''):q).join(', '),tyc:'v0-borrador',agregados:$('#rk2').checked,codigo:g('#rc'),trabajo:s.work,vehiculo:s.veh||'',apps:s.apps,consentimiento:$('#rk').checked};
  if(b.nombre)s.name=b.nombre.split(' ')[0];s.fullname=b.nombre;s.email=b.correo;s.agr=b.agregados;if(DEMO){s.scr='ob';s.obs=0;return}
  s.keep=0;if(!b.nombre||!b.telefono||!b.codigo){err('Completá nombre, teléfono y código de invitación.');return}
  if(!b.consentimiento){err('falta_consentimiento');return}
  $('#er').textContent='Creando tu cuenta…';const r=await api(b);if(!r.ok){err(r.error);return}
  SES={uid:r.userId,code:b.codigo,name:b.nombre,tel:b.telefono};LS.set('ses',SES);saveLocal();s.err='';s.scr='ob';s.obs=0},
-zona:v=>{s.zona=v},
+zona:v=>{const a=zl(s.zona);s.zona=(a.includes(v)?a.filter(q=>q!=v):[...a,v]).join(', ')},
 meditor:()=>{s.medit=1;setTimeout(()=>{const e=$('#mi');if(e){e.focus();e.select()}},80)},
 mclose:()=>{s.medit=0},
 msave:()=>{const m=num($('#mi').value);if(!(m>0)){s.toast='Escribí un monto mayor a 0';return}s.meta=m;SES.meta=m;LS.set('ses',SES);s.medit=0;saveProf();s.toast='Meta actualizada'},
@@ -472,17 +524,23 @@ mdw:v=>s.mapDow=+v,mpt:v=>s.mapPart=+v,zsel:v=>{s.mz=v||null;s.mzf=!!v},
 locate:()=>{if(!MAP)return;if(!navigator.geolocation){s.toast='Tu navegador no permite usar la ubicación.';return}
  navigator.geolocation.getCurrentPosition(p=>{if(ME)MAP.removeLayer(ME);ME=L.circleMarker([p.coords.latitude,p.coords.longitude],{radius:8,color:'#fff',weight:3,fillColor:'#2563eb',fillOpacity:1}).addTo(MAP);MAP.flyTo([p.coords.latitude,p.coords.longitude],14,{duration:.6})},()=>{s.toast='No pude ver tu ubicación. Revisá el permiso del navegador.';render()},{enableHighAccuracy:true,timeout:8000});s.keep=1;return Promise.resolve()},
 
-clock:()=>{if(s.since){const fin=Date.now(),min=Math.min(960,Math.max(1,Math.round((fin-s.since)/6e4))),sh={id:'l'+fin,ini:s.since,fin,min,d:key(today)};s.shifts.push(sh);
-  api({action:'addShift',userId:SES.uid,codigo:SES.code,inicio:new Date(s.since).toISOString(),fin:new Date(fin).toISOString(),minutos:min,fecha:key(today)}).then(r=>{if(r&&r.id)sh.id=r.id});
-  s.since=null;LS.set('shift',{});s.toast='Guardamos tu jornada: '+Math.floor(min/60)+' h '+min%60+' min'}
- else{s.since=Date.now();LS.set('shift',{since:s.since})}},
+clock:()=>{if(s.since){const fin=Date.now(),min=Math.min(960,Math.max(1,Math.round((fin-s.since)/6e4))),ap=[...(s.sapps||[])],sh={id:'l'+fin,ini:s.since,fin,min,d:key(today),apps:ap};s.shifts.push(sh);
+  const tr=trkStop(),sm=tr.length>1?trkSummary(tr,s.since,fin):null;if(sm){const T=LS.get('trks')||[];T.push(sm);LS.set('trks',T.slice(-20))}
+  {const m=LS.get('shapps')||{};m[s.since]=ap;const k=Object.keys(m);if(k.length>200)delete m[k[0]];LS.set('shapps',m)}
+  api({action:'addShift',userId:SES.uid,codigo:SES.code,inicio:new Date(s.since).toISOString(),fin:new Date(fin).toISOString(),minutos:min,fecha:key(today),apps:ap.join(', '),km:sm?sm.km:'',zonas:sm?Object.keys(sm.zm).map(k=>(ZN.find(z=>z.id==k)||{}).n).filter(Boolean).join(', '):''}).then(r=>{if(r&&r.id)sh.id=r.id});
+  s.since=null;s.sapps=[];LS.set('shift',{});s.toast='Guardamos tu jornada: '+Math.floor(min/60)+' h '+min%60+' min'+(sm?' · '+String(sm.km).replace('.',',')+' km':'')}
+ else if(s.apps.length>1){s.pick=(LS.get('lastapps')||[]).filter(a=>s.apps.includes(a));s.askApp=true}
+ else beginWork(s.apps)},
+askx:()=>{s.askApp=false},sp:v=>{s.pick=s.pick.includes(v)?s.pick.filter(a=>a!=v):[...s.pick,v]},strk:()=>{LS.set('trkpref',trkPref()?0:1)},
+gowork:()=>{if(!s.pick.length)return;s.askApp=false;beginWork([...s.pick])},
+ag:v=>{s.ag=s.ag||{};s.ag[v]=!s.ag[v]},why:()=>{s.why=!s.why},mmode:v=>{s.mmode=v;s.tfit=1;s.mz=null},
 
 more:()=>{keep();s.f.more=1},
 sdata:()=>{const n=$('#pn').value.trim();if(!n){s.toast='Escribí tu nombre';return}s.fullname=n;s.name=n.split(' ')[0];SES.name=n;LS.set('ses',SES);s.email=$('#pe').value.trim();saveProfile();s.toast='Datos guardados';s.scr='app'},
-pwork:()=>{const z=s.zona||'',o=/^Otra provincia/.test(z);s.dr={work:s.work,veh:s.veh||'',apps:[...s.apps],zona:o?'Otra provincia':z,otra:o?z.replace(/^Otra provincia:?\s*/,''):''};s.scr='p_work'},
+pwork:()=>{const a=zl(s.zona),o=a.find(q=>/^Otra provincia/.test(q));s.dr={work:s.work,veh:s.veh||'',apps:[...s.apps],zonas:a.map(q=>/^Otra provincia/.test(q)?'Otra provincia':q),otra:o?o.replace(/^Otra provincia:?\s*/,''):''};s.scr='p_work'},
 dk:()=>{const e=$('#dzo');if(e)s.dr.otra=e.value},
-dw:v=>{A.dk();s.dr.work=v},dv:v=>{A.dk();s.dr.veh=v},da:v=>{A.dk();const d=s.dr;d.apps=d.apps.includes(v)?d.apps.filter(a=>a!=v):[...d.apps,v]},dz:v=>{A.dk();s.dr.zona=v},
-swork:()=>{A.dk();const d=s.dr;s.work=d.work;s.veh=d.veh;s.apps=d.apps;s.zona=d.zona=='Otra provincia'?'Otra provincia'+(d.otra?': '+d.otra:''):d.zona;saveProfile();s.toast='Datos de trabajo guardados';s.scr='app'},
+dw:v=>{A.dk();s.dr.work=v},dv:v=>{A.dk();s.dr.veh=v},da:v=>{A.dk();const d=s.dr;d.apps=d.apps.includes(v)?d.apps.filter(a=>a!=v):[...d.apps,v]},dz:v=>{A.dk();const d=s.dr;d.zonas=d.zonas.includes(v)?d.zonas.filter(q=>q!=v):[...d.zonas,v]},
+swork:()=>{A.dk();const d=s.dr;s.work=d.work;s.veh=d.veh;s.apps=d.apps;s.zona=d.zonas.map(q=>q=='Otra provincia'?'Otra provincia'+(d.otra?': '+d.otra.replace(/,/g,' '):''):q).join(', ');saveProfile();s.toast='Datos de trabajo guardados';s.scr='app'},
 pgoal:()=>{s.gm=null;s.ge=null;s.scr='p_goal'},
 gq:v=>{s.gm=$('#gm').value;s.ge=$('#ge').value;s.obq=v},
 sgoal:()=>{const m=num($('#gm').value);if(!(m>0)){s.toast='Escribí una meta mayor a 0';return}s.meta=m;SES.meta=m;LS.set('ses',SES);s.est=num($('#ge').value);s.gm=s.ge=null;saveProf();s.toast='Meta actualizada';s.scr='app'},
@@ -542,7 +600,8 @@ document.addEventListener('change',async e=>{if(!OCR_ON||e.target.id!='fl'||!e.t
 
 if(!DEMO&&SES.uid){s.scr='app';s.name=(SES.name||s.name).split(' ')[0];s.meta=SES.meta||0;s.fullname=SES.name||'';applyLocal()}
 render();flush();addEventListener('online',flush);
-if(!DEMO&&SES.uid)load().then(()=>{ev('abrio_app');return Promise.all([loadNt(),loadShifts()])}).then(render);
+if(s.since)setTimeout(trkStart,800);
+ if(!DEMO&&SES.uid)load().then(()=>{ev('abrio_app');return Promise.all([loadNt(),loadShifts()])}).then(render);
 if(DEMO)loadNt().then(render);
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script></body></html>
